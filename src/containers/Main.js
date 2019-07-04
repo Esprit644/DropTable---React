@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import FloorPlan from '../components/FloorPlan/FloorPlan'
 import BookingForecast from '../components/BookingForecast';
+import NavBar from '../components/navbar/NavBar';
 
 class Main extends Component {
     constructor(props){
@@ -17,6 +18,7 @@ class Main extends Component {
             <Fragment>
             <FloorPlan state={this.state}/>
             <BookingForecast tables={this.state.tables} />
+            <NavBar />
             </Fragment>
         )
     }
