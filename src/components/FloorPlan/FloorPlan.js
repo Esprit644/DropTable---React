@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import './FloorPlan.css';
+import TableDetail from './TableDetail';
 
-const FloorPlan = () => {
+const FloorPlan = (props) => {
 
-    const tableNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-    function tables() {
-        tableNumbers.map((number, index) => {
-            return <div className={index}>{number}</div>
-        })
-
-    }
+    const tables = props.state.tables.map((number, index) => {
+        return <div className="table" key={index} >{number}</div>
+    })
 
     return (
+        <Fragment>
         <div className="floorplan">
             {tables}
         </div>
+        <TableDetail bookingDetail={props.state.bookings} customerDetail={props.state.customers} />
+        </Fragment>
     )
 }
 
