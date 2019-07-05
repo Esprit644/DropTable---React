@@ -11,10 +11,13 @@ class Main extends Component {
             customers: [{name: "Fred", phone: "07800900900", counter: 0}],
             bookings: [{date: "01/01/2019", time: "18:00", party_size: 4}]
         }
+        this.makeBooking = this.makeBooking.bind(this);
     }
 
     makeBooking(booking){
-        
+        this.setState((prevState) => {
+            return prevState.bookings.push(booking);
+        })
     }
 
     render(){
@@ -22,7 +25,7 @@ class Main extends Component {
             <Fragment>
             <FloorPlan state={this.state}/>
             <BookingForecast tables={this.state.tables} />
-            <NavBar />
+            <NavBar makeBooking={this.makeBooking}/>
             </Fragment>
         )
     }

@@ -1,10 +1,10 @@
 import React from 'react';
 import BookingForm from './BookingForm';
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     return(
-        <BookingForm />
+        <BookingForm makeBooking={props.makeBooking} />
     )
 
 }

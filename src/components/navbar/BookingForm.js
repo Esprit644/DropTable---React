@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BookingForm = () => {
+const BookingForm = (props) => {
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -10,10 +10,16 @@ const BookingForm = () => {
 
     function handleSubmit(event) {
         event.preventDefault()
-        
+        props.makeBooking(makeBookingObject());
+        setName('');
+        setPhone('');
+        setSize(0);
+        setDate('');
+        setTime('');
+        event.target.reset();
     }
 
-    function makeBooking(event) {
+    function makeBookingObject() {
         const bookingDetails = {
             name: name,
             phone_number: phone,
