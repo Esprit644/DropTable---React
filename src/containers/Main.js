@@ -13,6 +13,10 @@ class Main extends Component {
         }
     }
 
+    makeBooking(booking){
+        
+    }
+
     render(){
         return (
             <Fragment>

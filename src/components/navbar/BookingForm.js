@@ -2,40 +2,55 @@ import React, { useState } from 'react';
 
 const BookingForm = () => {
 
-    const [booking, setBooking] = useState({
-        name: '', 
-        phone_number: '',
-        size: 0,
-        date: '',
-        time: ''})
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [size, setSize] = useState(0);
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
 
-    function createBooking(event) {
+    function handleSubmit(event) {
         event.preventDefault()
-        const newBooking = makeBooking(event)
-        console.log('there',newBooking)
-        setBooking(newBooking)
-        console.log(booking)
+        
     }
 
     function makeBooking(event) {
         const bookingDetails = {
-            name: event.target.customer.value,
-            phone_number: event.target.phone.value,
-            size: event.target.size.value,
-            date: event.target.date.value,
-            time: event.target.time.value
+            name: name,
+            phone_number: phone,
+            size: size,
+            date: date,
+            time: time
         }
-        console.log('here',bookingDetails)
         return bookingDetails;
     }
 
+    function handleNameChange(event){
+        setName(event.target.value)
+    }
+
+    function handlePhoneChange(event){
+        setPhone(event.target.value)
+    }
+
+    function handleSizeChange(event){
+        setSize(event.target.value)
+    }
+
+    function handleDateChange(event){
+        setDate(event.target.value)
+    }
+
+    function handleTimeChange(event){
+        setTime(event.target.value)
+    }
+
     return (
-        <form className="booking_form" onSubmit={createBooking}>
-            <input type="text" required className="customer_name" name="customer" placeholder="Name"></input>
-            <input type="text" required className="phone_number" name="phone" placeholder="Phone Number"></input>
-            <input type="number" required className="party_size" name="size" placeholder="Party Size"></input>
-            <input type="date" required className="date" name="date" ></input>
-            <input type="time" required className="time" name="time" ></input>
+        <form className="booking_form" onSubmit={handleSubmit}>
+            <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
+            <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
+            <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+            <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
+            <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
             <input type="submit" value="Create Booking"></input>
         </form>
     )
