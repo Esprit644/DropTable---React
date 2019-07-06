@@ -53,6 +53,8 @@ const BookingForm = (props) => {
 
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
+					<div className="form-container"> 
+
             <div className="form-item">
             	<label for="customer">Customer Name: </label>
             	<input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
@@ -73,8 +75,10 @@ const BookingForm = (props) => {
 							<label for="time">Time: </label>
 							<input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
             </div>
+						<input type="submit" value="Create Booking" className="form-submit-button"></input>
 
-            <input type="submit" value="Create Booking"></input>
+					</div>
+
         </form>
     )
 
