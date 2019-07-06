@@ -1,10 +1,13 @@
 import React from 'react';
 import BookingForm from './BookingForm';
+import './NavBar.css';
 
 const NavBar = (props) => {
 
     return(
-        <BookingForm makeBooking={props.makeBooking} />
+        <nav id="nav-container">
+            <BookingForm makeBooking={props.makeBooking} />
+        </nav>
     )
 
 }
