@@ -3,9 +3,8 @@ import './FloorPlan.css';
 import TableDetail from './TableDetail';
 
 const FloorPlan = (props) => {
-
-    const tables = props.state.tables.map((number, index) => {
-        return <div className="table" key={index} >{number}</div>
+    const tables = props.state.diningTables.map((number, index) => {
+        return <div className="table" key={index} >{number.tableName}</div>
     })
 
     return (
