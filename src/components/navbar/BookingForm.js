@@ -53,11 +53,27 @@ const BookingForm = (props) => {
 
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
-            <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
-            <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
-            <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
-            <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
-            <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
+            <div className="form-item">
+            	<label for="customer">Customer Name: </label>
+            	<input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
+            </div>
+						<div className="form-item">
+							<label for="phone">Phone Number: </label>
+            	<input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
+            </div>
+						<div className="form-item">
+							<label for="size">Party Size: </label>
+							<input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+            </div>
+						<div className="form-item">
+							<label for="date">Date: </label>
+							<input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
+            </div>
+						<div className="form-item">
+							<label for="time">Time: </label>
+							<input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
+            </div>
+
             <input type="submit" value="Create Booking"></input>
         </form>
     )
