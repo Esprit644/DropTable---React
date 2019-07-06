@@ -4,9 +4,33 @@
     height: 400px;
     display: grid;
     grid-template-columns: repeat(44, 1fr);
-    grid-template-rows: 20px 1fr 1fr 1fr;
+    grid-template-rows: 20px repeat(3, 1fr);
 }
 
 .time{
     grid-column: span 4;
+    border: 1px solid black;
+}
+
+.tableNames{
+    height: 400px;
+    width: 40px;
+    display: grid;
+    grid-template-rows: 20px repeat(auto-fill, 1fr);
+    border: 1px solid black;
+    float: left;
+}
+
+.blank{
+    background-color: black;
+    margin: 0;
+}
+
+.tableName{
+    border: 1px solid black;
+    margin: 0;
+}
+
+.view{
+    display: flex;
 }
