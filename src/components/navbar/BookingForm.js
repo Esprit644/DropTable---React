@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const BookingForm = (props) => {
 
-    const [name, setName] = useState('');
+    const [customerName, setCustomerName] = useState('');
     const [phone, setPhone] = useState('');
     const [size, setSize] = useState(0);
     const [date, setDate] = useState('');
@@ -11,7 +11,7 @@ const BookingForm = (props) => {
     function handleSubmit(event) {
         event.preventDefault()
         props.makeBooking(makeBookingObject());
-        setName('');
+        setCustomerName('');
         setPhone('');
         setSize(0);
         setDate('');
@@ -21,7 +21,7 @@ const BookingForm = (props) => {
 
     function makeBookingObject() {
         const bookingDetails = {
-            name: name,
+            name: customerName,
             phone_number: phone,
             size: size,
             date: date,
@@ -30,8 +30,14 @@ const BookingForm = (props) => {
         return bookingDetails;
     }
 
+    const filteredName = props.customers.filter(customer => {
+        return customer.name.toLowerCase().includes(customerName.toLowerCase())
+    })
+
+
+
     function handleNameChange(event){
-        setName(event.target.value)
+        setCustomerName(event.target.value)
     }
 
     function handlePhoneChange(event){

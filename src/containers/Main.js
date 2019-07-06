@@ -20,11 +20,11 @@ class Main extends Component {
     makeBooking(booking) {
         const custDetails = { name: booking.name, phone_number: booking.phone_number }
         const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size }
-        // this.setState((prevState) => {
-        //     return prevState.bookings.push(bookDetails), prevState.customers.push(custDetails);
-        // })
+        this.setState((prevState)=> {
+            return {bookings: prevState.bookings.concat(bookDetails)}
+        })
         this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
-        // this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
+
     }
 
     postDetails(url, body, stateKey ){
@@ -63,7 +63,7 @@ class Main extends Component {
             <Fragment>
                 <FloorPlan state={this.state} />
                 <BookingForecast tables={this.state.tables} />
-                <NavBar makeBooking={this.makeBooking} />
+                <NavBar makeBooking={this.makeBooking} customers={this.state.customers} />
             </Fragment>
         )
     }

@@ -4,7 +4,7 @@ import BookingForm from './BookingForm';
 const NavBar = (props) => {
 
     return(
-        <BookingForm makeBooking={props.makeBooking} />
+        <BookingForm makeBooking={props.makeBooking} customers={props.customers} />
     )
 
 }
