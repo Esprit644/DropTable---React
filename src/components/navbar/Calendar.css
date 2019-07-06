@@ -1,0 +1,10 @@
+.calendar {
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.day {
+  border: 1px solid black;
+}
