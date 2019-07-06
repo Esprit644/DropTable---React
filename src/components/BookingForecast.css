@@ -1,0 +1,12 @@
+.forecast{
+    border: 1px solid black;
+    width: 1000px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(44, 1fr);
+    grid-template-rows: 20px 1fr 1fr 1fr;
+}
+
+.time{
+    grid-column: span 4;
+}

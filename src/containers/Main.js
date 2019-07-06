@@ -61,8 +61,7 @@ class Main extends Component {
     render() {
         return (
             <Fragment>
-                <FloorPlan state={this.state} />
-                <BookingForecast tables={this.state.tables} />
+                <BookingForecast diningTables={this.state.diningTables} />
                 <NavBar makeBooking={this.makeBooking} />
             </Fragment>
         )
