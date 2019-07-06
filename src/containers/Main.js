@@ -8,6 +8,7 @@ class Main extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            selectedDate: '',
             diningTables: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
             bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
@@ -16,6 +17,7 @@ class Main extends Component {
         this.makeBooking = this.makeBooking.bind(this);
         this.postDetails = this.postDetails.bind(this);
         this.fetchDetails = this.fetchDetails.bind(this);
+        this.updateSelectedDate = this.updateSelectedDate.bind(this)
     }
 
     makeBooking(booking) {
@@ -59,10 +61,16 @@ class Main extends Component {
         this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
     }
 
+    updateSelectedDate(newDate) {
+      const dateString = `${newDate}/07/2019`
+      this.setState({selectedDate: newDate})
+      console.log(dateString)
+    }
+
     render() {
         return (
             <Fragment>
-                <Calendar/>
+                <Calendar updateSelectedDate={this.updateSelectedDate}/>
             </Fragment>
         )
     }

@@ -9,6 +9,7 @@ class Calendar extends Component {
       calendarDays: []
     }
     this.makeDays = this.makeDays.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   // const calendarDays = []
@@ -24,10 +25,15 @@ class Calendar extends Component {
       dates.push(i);
     }
     let days = dates.map((date, index) => {
-      return <button className='day'>{date}</button>
+      return <button className='day' value={date} onClick={this.handleClick}>{date}</button>
     })
 
     this.setState({calendarDays: days})
+  }
+
+  handleClick(event) {
+    console.log(event.target.value)
+    this.props.updateSelectedDate(event.target.value)
   }
 
 render() {
