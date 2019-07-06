@@ -14,26 +14,27 @@ class Calendar extends Component {
   // const calendarDays = []
 
 
+  componentDidMount() {
+    this.makeDays();
+  }
 
   makeDays () {
     let dates = []
     for (let i=1; i<32; i++){
-      this.dates.push(i);
+      dates.push(i);
     }
     let days = dates.map((date, index) => {
-      return <button className='day'/>
+      return <button className='day'>{date}</button>
     })
 
     this.setState({calendarDays: days})
   }
 
-
-
 render() {
   return (
     <Fragment>
       <div className='calendar'>
-
+        {this.state.calendarDays}
       </div>
     <h1>Hello</h1>
     </Fragment>
