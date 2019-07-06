@@ -6,7 +6,12 @@ const NavBar = (props) => {
 
     return(
         <nav id="nav-container">
-            <BookingForm makeBooking={props.makeBooking} />
+            <div className="calendar-container">
+            
+            </div>
+            <div className="booking-form-container">
+                <BookingForm makeBooking={props.makeBooking} />
+            </div>
         </nav>
     )
 
