@@ -9,6 +9,8 @@ class Main extends Component {
         super(props)
         this.state = {
             selectedDate: '',
+            currentMonth: new Date().getMonth(),
+            numOfDaysInMonth: 31,
             diningTables: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
             bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
@@ -18,6 +20,8 @@ class Main extends Component {
         this.postDetails = this.postDetails.bind(this);
         this.fetchDetails = this.fetchDetails.bind(this);
         this.updateSelectedDate = this.updateSelectedDate.bind(this)
+        this.setNumOfDaysInMonth = this.setNumOfDaysInMonth.bind(this)
+
     }
 
     makeBooking(booking) {
@@ -59,6 +63,14 @@ class Main extends Component {
             .then(customerData => this.setState({customers: customerData._embedded.customers}
             ))
         this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
+        console.log(this.state.currentMonth)
+    }
+
+    setNumOfDaysInMonth() {
+      const numDays = 32 - new Date(2019, 1, 32).getDate();
+      console.log(numDays)
+      this.setState({numOfDaysInMonth: 13})
+      // return numDays
     }
 
     updateSelectedDate(newDate) {
@@ -70,7 +82,7 @@ class Main extends Component {
     render() {
         return (
             <Fragment>
-                <Calendar updateSelectedDate={this.updateSelectedDate}/>
+                <Calendar numOfDays={this.state.numOfDaysInMonth} updateSelectedDate={this.updateSelectedDate}/>
             </Fragment>
         )
     }
