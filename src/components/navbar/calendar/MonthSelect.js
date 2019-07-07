@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MonthSelector = (props) => {
+const MonthSelect = (props) => {
 
   const months = [
     'January',
@@ -16,24 +16,24 @@ const MonthSelector = (props) => {
     'December'
   ]
 
-  const currentMonth = new Date().getMonth();
-
-  console.log(months[currentMonth])
-
   const renderMonths = months.map((month, index) => {
-    if (currentMonth === index) {
+    if (props.currentMonth === index +1) {
       return <option key={index} selected="selected">{month}</option>
     } else {
       return <option key={index}>{month}</option>
     }
   })
 
+  function handleChange(event) {
+    const index = months.indexOf(event.target.value)
+    props.onMonthSelected(index)
+  }
+
   return (
-    <select id='month-selector' >
-      <option placeholder={months[currentMonth]}>{months[currentMonth]}</option>
+    <select id='month-selector' onChange={handleChange}>
       {renderMonths}
     </select>
   )
 }
 
-export default MonthSelector;
+export default MonthSelect;
