@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 const BookingForm = (props) => {
 
@@ -7,6 +7,9 @@ const BookingForm = (props) => {
     const [size, setSize] = useState(0);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
+    const [query, setQuery] = useState([]);
+    const [filteredCustomer, setfilteredCustomer] = useState([]);
+
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -30,41 +33,44 @@ const BookingForm = (props) => {
         return bookingDetails;
     }
 
-    const filteredName = props.customers.filter(customer => {
-        return customer.name.toLowerCase().includes(customerName.toLowerCase())
-    })
 
-
-
-    function handleNameChange(event){
+    function handleNameChange(event) {
+        console.log(event.target.value)
+        fetch(`http://localhost:8080/customers/partialname/${event.target.value}`)
+            .then(res => res.json())
+            .then(data => setfilteredCustomer(data))
+            .then(console.log(filteredCustomer))
         setCustomerName(event.target.value)
     }
 
-    function handlePhoneChange(event){
+    function handlePhoneChange(event) {
         setPhone(event.target.value)
     }
 
-    function handleSizeChange(event){
+    function handleSizeChange(event) {
         setSize(event.target.value)
     }
 
-    function handleDateChange(event){
+    function handleDateChange(event) {
         setDate(event.target.value)
     }
 
-    function handleTimeChange(event){
+    function handleTimeChange(event) {
         setTime(event.target.value)
     }
 
     return (
-        <form className="booking_form" onSubmit={handleSubmit}>
-            <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
-            <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
-            <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
-            <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
-            <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
-            <input type="submit" value="Create Booking"></input>
-        </form>
+        <Fragment>
+            <form className="booking_form" onSubmit={handleSubmit}>
+                <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange}></input>
+                <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
+                <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+                <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
+                <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
+                <input type="submit" value="Create Booking"></input>
+            </form>
+            <div>{filteredCustomer.map(customer => <p>{customer.name}</p>)}</div>
+        </Fragment>
     )
 
 }
