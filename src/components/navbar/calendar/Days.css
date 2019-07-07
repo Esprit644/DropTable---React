@@ -1,5 +1,12 @@
 .day:focus{
   font-weight: bold;
+  background-color: #83D0F2;
+  color: white;
+  outline:0;
+}
+
+.today{
+  font-weight: bold;
   background-color: #5F5F5F;
   color: white;
   outline:0;

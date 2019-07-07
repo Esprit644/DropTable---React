@@ -8,9 +8,15 @@ const Days = (props) => {
   let days = []
 
   for (let date=1; date<numOfDays; date++){
-    days.push(
-      <button className='day' value={date} key={date} onClick={handleClick}>{date}</button>
-    );
+    if (date === props.currentDate && new Date().getMonth()+1 == props.currentMonth) {
+      days.push(
+        <button className='today' value={date} key={date} onClick={handleClick}>{date}</button>
+      )
+    } else {
+      days.push(
+        <button className='day' value={date} key={date} onClick={handleClick}>{date}</button>
+      );
+    }
   }
 
   function handleClick(event) {

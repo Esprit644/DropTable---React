@@ -84,7 +84,6 @@ class Main extends Component {
     const newMonth = this.handleSingleFigureNum(month)
     const newDate = `${newDay}/${newMonth}/2019`
     this.setState({selectedDate: newDate})
-    this.setState({currentDate: day})
   }
 
   handleSingleFigureNum(num) {
@@ -101,7 +100,7 @@ class Main extends Component {
         <Fragment>
           <MonthSelect onMonthSelected={this.onMonthSelected} setNumOfDaysInMonth={this.setNumOfDaysInMonth} currentMonth={this.state.currentMonth}/>
           <div className='calendar'>
-            <Days  numOfDays={this.state.numOfDaysInMonth} currentMonth={this.state.currentMonth} onDaySelected={this.handleDaySelected}/>
+            <Days  numOfDays={this.state.numOfDaysInMonth} currentMonth={this.state.currentMonth} currentDate={this.state.currentDate} onDaySelected={this.handleDaySelected}/>
           </div>
           <h2>current date: {this.state.currentDate}</h2>
           <h2>current month: {this.state.currentMonth}</h2>
