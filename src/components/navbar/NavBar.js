@@ -16,7 +16,10 @@ const NavBar = (props) => {
               <Calendar updateSelectedDate={props.updateSelectedDate}/>
             </div>
             <div className="booking-form-container">
-                <BookingForm makeBooking={props.makeBooking} customers={props.customers}/>
+                <BookingForm
+                  makeBooking={props.makeBooking}
+                  customers={props.customers}
+                  updatePartySize={props.updatePartySize}/>
             </div>
         </nav>
 

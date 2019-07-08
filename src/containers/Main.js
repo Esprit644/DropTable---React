@@ -7,12 +7,15 @@ class Main extends Component {
     constructor(props) {
         super(props)
         this.state = {
+          availableTables: [],
+          selectedPartySize: 0,
           selectedDate: '',
           diningTables: [],
           customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
           bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
           urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
         }
+        this.updatePartySize = this.updatePartySize.bind(this);
         this.makeBooking = this.makeBooking.bind(this);
         this.postDetails = this.postDetails.bind(this);
         this.fetchDetails = this.fetchDetails.bind(this);
@@ -55,6 +58,9 @@ class Main extends Component {
       this.setState({selectedDate: newDate})
     }
 
+    updatePartySize(size) {
+      this.setState({selectedPartySize: size})
+    }
 
     componentDidMount(){
       this.fetchDetails(this.state.urls[0].customersURL, "customers")
@@ -64,15 +70,20 @@ class Main extends Component {
     render() {
       return (
         <Fragment>
-          <FloorPlan state={this.state} />
-                <BookingForecast tables={this.state.diningTables} />
-                <NavBar
-                  makeBooking={this.makeBooking}
-                  customers={this.state.customers}
-                  updateSelectedDate={this.updateSelectedDate} />
+        <FloorPlan
+          state={this.state}
+          selectedPartySize={this.state.selectedPartySize} />
+        <NavBar
+          updatePartySize={this.updatePartySize}
+          makeBooking={this.makeBooking}
+          customers={this.state.customers}
+          updateSelectedDate={this.updateSelectedDate}
+          tables={this.state.diningTables}/>
         </Fragment>
       )
     }
 }
 
 export default Main;
+
+// <BookingForecast tables={this.state.diningTables} />

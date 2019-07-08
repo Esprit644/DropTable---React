@@ -47,6 +47,13 @@ const BookingForm = (props) => {
         event.target.reset();
     }
 
+
+
+    function handlePartySize() {
+      const availableTables = []
+
+    }
+
     function convertSlashToHyphen(date) {
       return date.replace('/', '-')
     }
@@ -85,6 +92,7 @@ const BookingForm = (props) => {
 
     function handleSizeChange(event) {
         setSize(event.target.value)
+        props.updatePartySize(event.target.value)
     }
 
     function handleDateChange(event) {
@@ -96,7 +104,7 @@ const BookingForm = (props) => {
     }
 
 
-    
+
 
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
