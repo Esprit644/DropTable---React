@@ -7,20 +7,11 @@ const BookingForecast = (props) => {
 
     useEffect(() => {
         setTable(props.diningTables)
-<<<<<<< HEAD
     })
     let tableNumbers = [];
     for (let index = 0; index < tables.length; index++) {
         tableNumbers.push(<p key={index} className="tableName">{index + 1}</p>)
     }
-=======
-    },[props.diningTables])
-
-
-    // for (let index = 0; index < tables.length; index++) {
-    //     tableNumbers.push(<p key="index" className="tableName">{index + 1}</p>)
-    // }
->>>>>>> develop
 
     let times = [];
     for (let index = 0; index < 11; index++) {
