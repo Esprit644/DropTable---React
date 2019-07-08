@@ -13,10 +13,7 @@ const Days = (props) => {
   }
 
   for (let date=1; date<numOfDays; date++){
-    if (date === 1) {
-      <button style={firstDayStyle} value={date} key={date} onClick={handleClick}>{date}</button>
-
-    }else if (date === props.currentDate && new Date().getMonth()+1 == props.currentMonth) {
+    if (date === props.currentDate && new Date().getMonth()+1 == props.currentMonth) {
       days.push(
         <button className='today' value={date} key={date} onClick={handleClick}>{date}</button>
       )

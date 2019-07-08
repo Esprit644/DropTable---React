@@ -71,19 +71,6 @@ const BookingForm = (props) => {
 
 
     return (
-<<<<<<< HEAD
-        <Fragment>
-            <form className="booking_form" onSubmit={handleSubmit}>
-                <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} defaultValue={foundName}></input>
-                <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} defaultValue={foundNumber} ></input>
-                <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
-                <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
-                <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
-                <input type="submit" value="Create Booking"></input>
-            </form>
-            {searchOptions}
-        </Fragment>
-=======
         <form className="booking_form" onSubmit={handleSubmit}>
             <div className="form-container"> 
 
@@ -112,7 +99,6 @@ const BookingForm = (props) => {
             </div>
 
         </form>
->>>>>>> develop
     )
 
 }
