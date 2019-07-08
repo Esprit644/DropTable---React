@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './BookingForm.css'
 
 const BookingForm = (props) => {
@@ -9,6 +9,10 @@ const BookingForm = (props) => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [filteredCustomers, setfilteredCustomers] = useState([]);
+    const [selectedCustomer, setSelectedCustomer] = useState('');
+    const [foundName, setFoundName] = useState('');
+    const [foundNumber, setFoundNumber] = useState('');
+    const [visible, setVisible] = useState('');
 
     useEffect(() => {
         if(!customerName) {
@@ -19,6 +23,18 @@ const BookingForm = (props) => {
         .then(res => res.json())
         .then(data => setfilteredCustomers(data))
     },[customerName])
+
+    useEffect(() => {
+        setFoundName(selectedCustomer)
+    }, [selectedCustomer])
+
+    useEffect(() => {
+        props.customers.forEach(customer => {
+            if(customer.name === selectedCustomer){
+                setFoundNumber(customer.phoneNumber)
+            }
+        })
+    }, [selectedCustomer])
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -47,26 +63,20 @@ const BookingForm = (props) => {
         return bookingDetails;
     }
 
-
-
     const searchOptions = filteredCustomers.map((customer, index) => {
-        return <p key={index} onClick={populateForm}>{customer.name}</p>
+        return <p key={index} onClick={handleSelectedCustomer}>{customer.name}</p>
     })
-    let foundName = '';
-    let foundNumber = '';
 
 
-    function populateForm(event) {
-        props.customers.forEach(customer => {
-            if(customer.name === event.target.innerHTML){
-                foundName = customer.name
-            }
-        })
-        console.log(event.target.innerHTML)
+    function handleSelectedCustomer(event){
+        setSelectedCustomer(event.target.innerHTML)
+        setVisible("hidden");
     }
 
     function handleNameChange(event) {
         setCustomerName(event.target.value)
+        setFoundName(event.target.value)
+        setVisible('');
     }
 
     function handlePhoneChange(event) {
@@ -86,29 +96,31 @@ const BookingForm = (props) => {
     }
 
 
+    
+
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
             <div className="form-container">
 
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
-                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} defaultValue={foundName}></input>
-                    <div className="name-search-narrower">{searchOptions}</div>
+                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} value={foundName} ></input>
+                    <div className={`name-search-narrower + ${visible}` } >{searchOptions}</div>
                 </div>
                 <div className="form-item">
-                    <label for="phone">Phone Number: </label>
-                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
+                    <label htmlFor="phone">Phone Number: </label>
+                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} value={foundNumber} ></input>
                 </div>
                 <div className="form-item">
-                    <label for="size">Party Size: </label>
+                    <label htmlFor="size">Party Size: </label>
                     <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
                 </div>
                 <div className="form-item">
-                    <label for="date">Date: </label>
+                    <label htmlFor="date">Date: </label>
                     <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
                 </div>
                 <div className="form-item">
-                    <label for="time">Time: </label>
+                    <label htmlFor="time">Time: </label>
                     <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
                 </div>
                     <input type="submit" value="Create Booking" className="form-submit-button"></input>
