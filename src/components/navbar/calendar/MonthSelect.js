@@ -17,11 +17,9 @@ const MonthSelect = (props) => {
   ]
 
   const renderMonths = months.map((month, index) => {
-    if (props.currentMonth === index +1) {
-      return <option key={index} selected="selected">{month}</option>
-    } else {
-      return <option key={index}>{month}</option>
-    }
+
+      return <option key={index} value={index + 1} >{month}</option>
+    
   })
 
   function handleChange(event) {
@@ -30,7 +28,7 @@ const MonthSelect = (props) => {
   }
 
   return (
-    <select id='month-selector' onChange={handleChange}>
+    <select id='month-selector' value={props.currentMonth} onChange={handleChange}>
       {renderMonths}
     </select>
   )
