@@ -1,3 +1,7 @@
+.day {
+  border: 1px solid black;
+}
+
 .day:focus{
   font-weight: bold;
   background-color: #83D0F2;

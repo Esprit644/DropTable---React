@@ -5,6 +5,7 @@ import NavBar from '../components/navbar/NavBar';
 import Days from '../components/navbar/calendar/Days';
 import MonthSelect from '../components/navbar/calendar/MonthSelect';
 import '../components/navbar/calendar/Calendar.css';
+import '../components/navbar/calendar/Days.css';
 
 class Main extends Component {
     constructor(props) {
@@ -100,6 +101,14 @@ class Main extends Component {
         <Fragment>
           <MonthSelect onMonthSelected={this.onMonthSelected} setNumOfDaysInMonth={this.setNumOfDaysInMonth} currentMonth={this.state.currentMonth}/>
           <div className='calendar'>
+            <p>Mon</p>
+            <p>Tue</p>
+            <p>Wed</p>
+            <p>Thu</p>
+            <p>Fri</p>
+            <p>Sat</p>
+            <p>Sun</p>
+
             <Days  numOfDays={this.state.numOfDaysInMonth} currentMonth={this.state.currentMonth} currentDate={this.state.currentDate} onDaySelected={this.handleDaySelected}/>
           </div>
           <h2>current date: {this.state.currentDate}</h2>
