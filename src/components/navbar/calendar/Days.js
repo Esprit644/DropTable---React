@@ -6,11 +6,6 @@ const Days = (props) => {
   const numOfDays = props.numOfDays + 1
   let days = []
 
-  const firstDayStyle = {
-    // border: '1px solid black',
-    // gridColumnStart: '{firstDay}'
-
-  }
 
   for (let date=1; date<numOfDays; date++){
     if (date === props.currentDate && new Date().getMonth()+1 == props.currentMonth) {
