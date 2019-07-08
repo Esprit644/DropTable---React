@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import FloorPlan from '../components/FloorPlan/FloorPlan'
 import BookingForecast from '../components/BookingForecast';
 import NavBar from '../components/navbar/NavBar';
+import ErrorPage from "../components/ErrorPage";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 class Main extends Component {
     constructor(props) {
@@ -64,12 +66,31 @@ class Main extends Component {
     render() {
       return (
         <Fragment>
-          <FloorPlan state={this.state} />
-                <BookingForecast tables={this.state.diningTables} />
-                <NavBar
-                  makeBooking={this.makeBooking}
-                  customers={this.state.customers}
-                  updateSelectedDate={this.updateSelectedDate} />
+          <Router>
+            <React.Fragment>
+              <Switch>
+                <Route
+                  path="/floor-plan"
+                  render={() => {
+                    return <FloorPlan state={this.state} />
+                  }}
+                />
+                <Route
+                  path="/booking-forecast"
+                  render={() => {
+                    return <BookingForecast tables={this.state.diningTables} />
+                  }}
+                />
+                <Route component={ErrorPage}/>
+     
+              </Switch>
+            </React.Fragment>
+          </Router>
+      
+          <NavBar
+            makeBooking={this.makeBooking}
+            customers={this.state.customers}
+            updateSelectedDate={this.updateSelectedDate} />
         </Fragment>
       )
     }

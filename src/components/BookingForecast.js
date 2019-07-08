@@ -18,9 +18,9 @@ const BookingForecast = (props) => {
     console.log(tableNumbers)
 
     let times = [];
-    for (let index = 0; index < 11; index++) {
-        times.push(index);
-    }
+    // for (let index = 0; index < 11; index++) {
+    //     times.push(index);
+    // }
     const displayTimes = times.map((time, index) => {
         return <div key={index} className="time">{time}</div>
     })

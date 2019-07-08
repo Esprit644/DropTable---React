@@ -5,6 +5,7 @@ import './NavBar.css';
 import Days from './calendar/Days';
 import MonthSelect from './calendar/MonthSelect';
 import './calendar/Calendar.css';
+import SwitchToggle from './SwitchToggle.js';
 
 
 const NavBar = (props) => {
@@ -13,6 +14,7 @@ const NavBar = (props) => {
 
         <nav id="nav-container">
             <div className="calendar-container">
+							<SwitchToggle/>
               <Calendar updateSelectedDate={props.updateSelectedDate}/>
             </div>
             <div className="booking-form-container">

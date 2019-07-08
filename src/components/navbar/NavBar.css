@@ -4,7 +4,9 @@
     width: 30vw;
     height: 90vh;
     background-color: #D44C66;
-    margin-top: -15.977px;
+    /* margin-top: -15.977px; */
+    /* margin-top: -2px; */
+    /* change the margin based on the header and the border of the main section */
 }
 
 .calendar-container {
@@ -13,4 +15,10 @@
 
 .booking-form-container {
     height: 50%;
+}
+
+/* Slider */
+
+.slider.round{
+    border-radius: 30%;
 }
