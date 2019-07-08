@@ -1,21 +1,17 @@
-import React, { useState, Fragment, useEffect, useRef } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import './BookingForecast.css';
 
 const BookingForecast = (props) => {
 
     const [tables, setTable] = useState([])
 
-    let tableNumbers = [];
     useEffect(() => {
         setTable(props.diningTables)
     })
-    console.log(tables)
-
+    let tableNumbers = [];
     for (let index = 0; index < tables.length; index++) {
-        tableNumbers.push(<p key="index" className="tableName">{index + 1}</p>)
+        tableNumbers.push(<p key={index} className="tableName">{index + 1}</p>)
     }
-
-    console.log(tableNumbers)
 
     let times = [];
     for (let index = 0; index < 11; index++) {
