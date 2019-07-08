@@ -99,7 +99,7 @@ class Main extends Component {
     render() {
       return (
         <Fragment>
-          <MonthSelect onMonthSelected={this.onMonthSelected} setNumOfDaysInMonth={this.setNumOfDaysInMonth} currentMonth={this.state.currentMonth}/>
+          {/* <MonthSelect onMonthSelected={this.onMonthSelected} setNumOfDaysInMonth={this.setNumOfDaysInMonth} currentMonth={this.state.currentMonth}/>
           <div className='calendar'>
             <p>Mon</p>
             <p>Tue</p>
@@ -114,10 +114,18 @@ class Main extends Component {
           <h2>current date: {this.state.currentDate}</h2>
           <h2>current month: {this.state.currentMonth}</h2>
           <h2>selected date:{this.state.selectedDate}</h2>
-          <h2>num of days in month:{this.state.numOfDaysInMonth}</h2>
+          <h2>num of days in month:{this.state.numOfDaysInMonth}</h2> */}
           <FloorPlan state={this.state} />
                 <BookingForecast tables={this.state.tables} />
-                <NavBar makeBooking={this.makeBooking} customers={this.state.customers} />
+                <NavBar makeBooking={this.makeBooking} 
+                customers={this.state.customers}
+                onMonthSelected={this.onMonthSelected} 
+                setNumOfDaysInMonth={this.setNumOfDaysInMonth} 
+                currentMonth={this.state.currentMonth} 
+                numOfDays={this.state.numOfDaysInMonth} 
+                currentMonth={this.state.currentMonth} 
+                currentDate={this.state.currentDate} 
+                onDaySelected={this.handleDaySelected}/>
         </Fragment>
       )
     }
