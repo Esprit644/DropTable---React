@@ -32,19 +32,24 @@ const BookingForm = (props) => {
         event.target.reset();
     }
 
+    function convertSlashToHyphen(date) {
+      return date.replace('/', '-')
+    }
+
     function makeBookingObject() {
+      const newDate = convertSlashToHyphen(date)
         const bookingDetails = {
             name: customerName,
             phone_number: phone,
             size: size,
-            date: date,
+            date: newDate,
             time: time
         }
         return bookingDetails;
     }
 
 
-    
+
     const searchOptions = filteredCustomers.map((customer, index) => {
         return <p key={index} onClick={handleSelectedCustomer}>{customer.name}</p>
     })
@@ -79,28 +84,29 @@ const BookingForm = (props) => {
 
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
-                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange}></input>
-                    <div>{searchOptions}</div>
+                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
+                    <div className="name-search-narrower">{searchOptions}</div>
                 </div>
                 <div className="form-item">
-                    <label htmlFor="phone">Phone Number: </label>
+                    <label for="phone">Phone Number: </label>
                     <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
                 </div>
                 <div className="form-item">
-                    <label htmlFor="size">Party Size: </label>
+                    <label for="size">Party Size: </label>
                     <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
                 </div>
                 <div className="form-item">
-                    <label htmlFor="date">Date: </label>
+                    <label for="date">Date: </label>
                     <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
                 </div>
                 <div className="form-item">
-                    <label htmlFor="time">Time: </label>
+                    <label for="time">Time: </label>
                     <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
                 </div>
-                <input type="submit" value="Create Booking" className="form-submit-button"></input>
+                    <input type="submit" value="Create Booking" className="form-submit-button"></input>
 
-            </div>
+
+                </div>
 
         </form>
     )

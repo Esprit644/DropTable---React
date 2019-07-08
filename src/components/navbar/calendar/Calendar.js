@@ -36,7 +36,7 @@ class Calendar extends Component {
   handleDaySelected(day, month){
     const newDay = this.handleSingleFigureNum(day)
     const newMonth = this.handleSingleFigureNum(month)
-    const newDate = `${newDay}/${newMonth}/2019`
+    const newDate = `${newDay}-${newMonth}-2019`
     this.props.updateSelectedDate(newDate)
     // this.setState({selectedDate: newDate})
   }
