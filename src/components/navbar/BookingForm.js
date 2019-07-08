@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 
 const BookingForm = (props) => {
 
@@ -7,7 +7,6 @@ const BookingForm = (props) => {
     const [size, setSize] = useState(0);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
-    const [query, setQuery] = useState([]);
     const [filteredCustomer, setfilteredCustomer] = useState([]);
 
 
@@ -35,12 +34,22 @@ const BookingForm = (props) => {
 
 
     function handleNameChange(event) {
-        console.log(event.target.value)
         fetch(`http://localhost:8080/customers/partialname/${event.target.value}`)
             .then(res => res.json())
             .then(data => setfilteredCustomer(data))
-            .then(console.log(filteredCustomer))
         setCustomerName(event.target.value)
+
+    }
+
+    const searchOptions = filteredCustomer.map((customer, index) => {
+        return <p key={index} onClick={populateForm}>{customer.name}</p>
+    })
+    let foundName = '';
+    let foundNumber = '';
+
+
+    function populateForm(event) {
+        
     }
 
     function handlePhoneChange(event) {
@@ -59,17 +68,18 @@ const BookingForm = (props) => {
         setTime(event.target.value)
     }
 
+
     return (
         <Fragment>
             <form className="booking_form" onSubmit={handleSubmit}>
-                <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange}></input>
-                <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
+                <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} defaultValue={foundName}></input>
+                <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} defaultValue={foundNumber} ></input>
                 <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
                 <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
                 <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
                 <input type="submit" value="Create Booking"></input>
             </form>
-            <div>{filteredCustomer.map(customer => <p>{customer.name}</p>)}</div>
+            {searchOptions}
         </Fragment>
     )
 
