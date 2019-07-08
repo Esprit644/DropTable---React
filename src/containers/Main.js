@@ -9,8 +9,8 @@ class Main extends Component {
         this.state = {
           selectedDate: '',
           diningTables: [],
-          customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
-          bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
+          customers: [],
+          bookings: [],
           urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
         }
         this.makeBooking = this.makeBooking.bind(this);

@@ -24,11 +24,16 @@ const BookingForecast = (props) => {
     return (
         <Fragment>
             <div className="view">
-                <div className="tableNames">
-                    {tableNumbers}
-                </div>
-                <div className="forecast">
+                <div className="times">
                     {displayTimes}
+                </div>
+                <div className="container">
+
+                    <div className="tableNames">
+                        {tableNumbers}
+                    </div>
+                    <div className="forecast">
+                    </div>
                 </div>
             </div>
         </Fragment>
