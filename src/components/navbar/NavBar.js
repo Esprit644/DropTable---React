@@ -14,7 +14,7 @@ const NavBar = (props) => {
 
         <nav id="nav-container">
             <div className="calendar-container">
-							<SwitchToggle/>
+			  <SwitchToggle/>
               <Calendar updateSelectedDate={props.updateSelectedDate}/>
             </div>
             <div className="booking-form-container">
