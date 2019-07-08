@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import './BookingForm.css'
 
 const BookingForm = (props) => {
 
-    const [name, setName] = useState('');
+    const [customerName, setCustomerName] = useState('');
     const [phone, setPhone] = useState('');
     const [size, setSize] = useState(0);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
+    const [filteredCustomer, setfilteredCustomer] = useState([]);
+
 
     function handleSubmit(event) {
         event.preventDefault()
         props.makeBooking(makeBookingObject());
-        setName('');
+        setCustomerName('');
         setPhone('');
         setSize(0);
         setDate('');
@@ -22,7 +24,7 @@ const BookingForm = (props) => {
 
     function makeBookingObject() {
         const bookingDetails = {
-            name: name,
+            name: customerName,
             phone_number: phone,
             size: size,
             date: date,
@@ -31,25 +33,42 @@ const BookingForm = (props) => {
         return bookingDetails;
     }
 
-    function handleNameChange(event){
-        setName(event.target.value)
+
+    function handleNameChange(event) {
+        fetch(`http://localhost:8080/customers/partialname/${event.target.value}`)
+            .then(res => res.json())
+            .then(data => setfilteredCustomer(data))
+        setCustomerName(event.target.value)
+
     }
 
-    function handlePhoneChange(event){
+    const searchOptions = filteredCustomer.map((customer, index) => {
+        return <p key={index} onClick={populateForm}>{customer.name}</p>
+    })
+    let foundName = '';
+    let foundNumber = '';
+
+
+    function populateForm(event) {
+        
+    }
+
+    function handlePhoneChange(event) {
         setPhone(event.target.value)
     }
 
-    function handleSizeChange(event){
+    function handleSizeChange(event) {
         setSize(event.target.value)
     }
 
-    function handleDateChange(event){
+    function handleDateChange(event) {
         setDate(event.target.value)
     }
 
-    function handleTimeChange(event){
+    function handleTimeChange(event) {
         setTime(event.target.value)
     }
+
 
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
