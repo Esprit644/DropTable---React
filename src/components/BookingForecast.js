@@ -8,12 +8,12 @@ const BookingForecast = (props) => {
     let tableNumbers = [];
     useEffect(() => {
         setTable(props.diningTables)
-    })
-    console.log(tables)
+    },[props.diningTables])
 
-    for (let index = 0; index < tables.length; index++) {
-        tableNumbers.push(<p key="index" className="tableName">{index + 1}</p>)
-    }
+
+    // for (let index = 0; index < tables.length; index++) {
+    //     tableNumbers.push(<p key="index" className="tableName">{index + 1}</p>)
+    // }
 
     console.log(tableNumbers)
 
