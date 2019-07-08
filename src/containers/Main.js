@@ -67,42 +67,12 @@ class Main extends Component {
     render() {
       return (
         <Fragment>
-<<<<<<< HEAD
-          {/* <MonthSelect onMonthSelected={this.onMonthSelected} setNumOfDaysInMonth={this.setNumOfDaysInMonth} currentMonth={this.state.currentMonth}/>
-          <div className='calendar'>
-            <p>Mon</p>
-            <p>Tue</p>
-            <p>Wed</p>
-            <p>Thu</p>
-            <p>Fri</p>
-            <p>Sat</p>
-            <p>Sun</p>
-
-            <Days  numOfDays={this.state.numOfDaysInMonth} currentMonth={this.state.currentMonth} currentDate={this.state.currentDate} onDaySelected={this.handleDaySelected}/>
-          </div>
-          <h2>current date: {this.state.currentDate}</h2>
-          <h2>current month: {this.state.currentMonth}</h2>
-          <h2>selected date:{this.state.selectedDate}</h2>
-          <h2>num of days in month:{this.state.numOfDaysInMonth}</h2> */}
-          <FloorPlan state={this.state} />
-                <BookingForecast tables={this.state.tables} />
-                <NavBar makeBooking={this.makeBooking} 
-                customers={this.state.customers}
-                onMonthSelected={this.onMonthSelected} 
-                setNumOfDaysInMonth={this.setNumOfDaysInMonth} 
-                currentMonth={this.state.currentMonth} 
-                numOfDays={this.state.numOfDaysInMonth} 
-                currentMonth={this.state.currentMonth} 
-                currentDate={this.state.currentDate} 
-                onDaySelected={this.handleDaySelected}/>
-=======
           <FloorPlan state={this.state} />
                 <BookingForecast tables={this.state.tables} />
                 <NavBar
                   makeBooking={this.makeBooking}
                   customers={this.state.customers}
                   updateSelectedDate={this.updateSelectedDate} />
->>>>>>> develop
         </Fragment>
       )
     }
