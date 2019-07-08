@@ -9,6 +9,7 @@ const BookingForm = (props) => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [filteredCustomers, setfilteredCustomers] = useState([]);
+    const [selectedCustomers, setSelectedCustomers] = useState('');
 
     useEffect(() => {
         if(!customerName) {
@@ -45,19 +46,11 @@ const BookingForm = (props) => {
 
     
     const searchOptions = filteredCustomers.map((customer, index) => {
-        return <p key={index} onClick={populateForm}>{customer.name}</p>
+        return <p key={index} onClick={handleSelectedCustomer}>{customer.name}</p>
     })
-    let foundName = '';
-    let foundNumber = '';
 
-
-    function populateForm(event) {
-        props.customers.forEach(customer => {
-            if(customer.name === event.target.innerHTML){
-                foundName = customer.name
-            }
-        })
-        console.log(event.target.innerHTML)
+    function handleSelectedCustomer(event){
+        setSelectedCustomers(event.target.innerHTML)
     }
 
     function handleNameChange(event) {
@@ -80,14 +73,13 @@ const BookingForm = (props) => {
         setTime(event.target.value)
     }
 
-
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
             <div className="form-container">
 
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
-                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} defaultValue={foundName}></input>
+                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange}></input>
                     <div>{searchOptions}</div>
                 </div>
                 <div className="form-item">
