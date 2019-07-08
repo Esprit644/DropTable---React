@@ -9,9 +9,12 @@ const FloorPlan = (props) => {
 
     return (
         <Fragment>
-        <div className="floorplan">
-            {tables}
-        </div>
+            <div className="floorplan-container">
+                <div className="floorplan">
+                    {tables}
+                 </div>
+            </div>
+
         <TableDetail bookingDetail={props.state.bookings} customerDetail={props.state.customers} />
         </Fragment>
     )
