@@ -10,7 +10,7 @@ const TableDetail = (props) => {
 
     return (
         <ul>
-            {details}
+            {/* {details} */}
         </ul>
     )
 
