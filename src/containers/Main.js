@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import FloorPlan from '../components/FloorPlan/FloorPlan'
 import BookingForecast from '../components/BookingForecast';
 import NavBar from '../components/navbar/NavBar';
-import Calendar from '../components/navbar/calendar/Calendar';
 
 class Main extends Component {
     constructor(props) {
@@ -68,10 +67,12 @@ class Main extends Component {
     render() {
       return (
         <Fragment>
-          <Calendar updateSelectedDate={this.updateSelectedDate}/>
           <FloorPlan state={this.state} />
                 <BookingForecast tables={this.state.tables} />
-                <NavBar makeBooking={this.makeBooking} customers={this.state.customers} />
+                <NavBar
+                  makeBooking={this.makeBooking}
+                  customers={this.state.customers}
+                  updateSelectedDate={this.updateSelectedDate} />
         </Fragment>
       )
     }

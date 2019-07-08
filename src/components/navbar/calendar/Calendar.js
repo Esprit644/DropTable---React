@@ -65,13 +65,15 @@ class Calendar extends Component {
 
       <Days  numOfDays={this.state.numOfDaysInMonth} currentMonth={this.state.currentMonth} currentDate={this.state.currentDate} onDaySelected={this.handleDaySelected}/>
       </div>
-      <h2>current date: {this.state.currentDate}</h2>
-      <h2>current month: {this.state.currentMonth}</h2>
-      <h2>selected date:{this.state.selectedDate}</h2>
-      <h2>num of days in month:{this.state.numOfDaysInMonth}</h2>
+
       </Fragment>
     )
   }
 }
 
 export default Calendar;
+
+// <h2>current date: {this.state.currentDate}</h2>
+// <h2>current month: {this.state.currentMonth}</h2>
+// <h2>selected date:{this.state.selectedDate}</h2>
+// <h2>num of days in month:{this.state.numOfDaysInMonth}</h2>
