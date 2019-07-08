@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import './BookingForm.css'
 
 const BookingForm = (props) => {
@@ -8,8 +8,17 @@ const BookingForm = (props) => {
     const [size, setSize] = useState(0);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
-    const [filteredCustomer, setfilteredCustomer] = useState([]);
+    const [filteredCustomers, setfilteredCustomers] = useState([]);
 
+    useEffect(() => {
+        if(!customerName) {
+            setfilteredCustomers([])
+            return
+        }
+        fetch(`http://localhost:8080/customers/partialname/${customerName}`)
+        .then(res => res.json())
+        .then(data => setfilteredCustomers(data))
+    },[customerName])
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -35,14 +44,10 @@ const BookingForm = (props) => {
 
 
     function handleNameChange(event) {
-        fetch(`http://localhost:8080/customers/partialname/${event.target.value}`)
-            .then(res => res.json())
-            .then(data => setfilteredCustomer(data))
         setCustomerName(event.target.value)
-
     }
 
-    const searchOptions = filteredCustomer.map((customer, index) => {
+    const searchOptions = filteredCustomers.map((customer, index) => {
         return <p key={index} onClick={populateForm}>{customer.name}</p>
     })
     let foundName = '';
@@ -50,7 +55,7 @@ const BookingForm = (props) => {
 
 
     function populateForm(event) {
-        
+
     }
 
     function handlePhoneChange(event) {
@@ -72,29 +77,30 @@ const BookingForm = (props) => {
 
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
-            <div className="form-container"> 
+            <div className="form-container">
 
                 <div className="form-item">
                     <label for="customer">Customer Name: </label>
                     <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
+                    <div>{searchOptions}</div>
                 </div>
-                            <div className="form-item">
-                                <label for="phone">Phone Number: </label>
+                <div className="form-item">
+                    <label for="phone">Phone Number: </label>
                     <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} ></input>
                 </div>
-                            <div className="form-item">
-                                <label for="size">Party Size: </label>
-                                <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+                <div className="form-item">
+                    <label for="size">Party Size: </label>
+                    <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
                 </div>
-                            <div className="form-item">
-                                <label for="date">Date: </label>
-                                <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
+                <div className="form-item">
+                    <label for="date">Date: </label>
+                    <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
                 </div>
-                            <div className="form-item">
-                                <label for="time">Time: </label>
-                                <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
+                <div className="form-item">
+                    <label for="time">Time: </label>
+                    <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
                 </div>
-                            <input type="submit" value="Create Booking" className="form-submit-button"></input>
+                <input type="submit" value="Create Booking" className="form-submit-button"></input>
 
             </div>
 
