@@ -31,19 +31,24 @@ const BookingForm = (props) => {
         event.target.reset();
     }
 
+    function convertSlashToHyphen(date) {
+      return date.replace('/', '-')
+    }
+
     function makeBookingObject() {
+      const newDate = convertSlashToHyphen(date)
         const bookingDetails = {
             name: customerName,
             phone_number: phone,
             size: size,
-            date: date,
+            date: newDate,
             time: time
         }
         return bookingDetails;
     }
 
 
-    
+
     const searchOptions = filteredCustomers.map((customer, index) => {
         return <p key={index} onClick={populateForm}>{customer.name}</p>
     })

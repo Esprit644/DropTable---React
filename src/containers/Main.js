@@ -20,7 +20,7 @@ class Main extends Component {
     }
 
     makeBooking(booking) {
-        const custDetails = { name: booking.name, phone_number: booking.phone_number }
+        const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
         const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size }
         this.setState((prevState)=> {
             return {bookings: prevState.bookings.concat(bookDetails)}
@@ -57,11 +57,8 @@ class Main extends Component {
 
 
     componentDidMount(){
-        // fetch('http://localhost:8080/customers')
-        //     .then(res => res.json())
-        //     .then(customerData => this.setState({customers: customerData._embedded.customers}
-        //     ))
-        // this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
+      this.fetchDetails(this.state.urls[0].customersURL, "customers")
+      this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
     }
 
     render() {
