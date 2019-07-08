@@ -52,7 +52,12 @@ const BookingForm = (props) => {
 
 
     function populateForm(event) {
-
+        props.customers.forEach(customer => {
+            if(customer.name === event.target.innerHTML){
+                foundName = customer.name
+            }
+        })
+        console.log(event.target.innerHTML)
     }
 
     function handleNameChange(event) {
@@ -82,7 +87,7 @@ const BookingForm = (props) => {
 
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
-                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} ></input>
+                    <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} defaultValue={foundName}></input>
                     <div>{searchOptions}</div>
                 </div>
                 <div className="form-item">

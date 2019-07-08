@@ -57,11 +57,11 @@ class Main extends Component {
 
 
     componentDidMount(){
-        // fetch('http://localhost:8080/customers')
-        //     .then(res => res.json())
-        //     .then(customerData => this.setState({customers: customerData._embedded.customers}
-        //     ))
-        // this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
+        fetch('http://localhost:8080/customers')
+            .then(res => res.json())
+            .then(customerData => this.setState({customers: customerData._embedded.customers}
+            ))
+        this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
     }
 
     render() {
