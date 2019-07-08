@@ -4,7 +4,7 @@ import TableDetail from './TableDetail';
 
 const FloorPlan = (props) => {
     const tables = props.state.diningTables.map((number, index) => {
-        return <div className="table" key={index} >{number.tableName}</div>
+        return <div className="table" key={index} >{number.tableName} <TableDetail bookingDetail={props.state.customerDetail}></TableDetail></div>
     })
 
     return (
