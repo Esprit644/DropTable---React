@@ -4,10 +4,9 @@ import TableDetail from './TableDetail';
 
 const FloorPlan = (props) => {
     const tables = props.state.diningTables.map((number, index) => {
-        return <div className="table" draggable="true"  id="diningTable" key={index} >{number.tableName} <TableDetail bookingDetail={props.state.customerDetail}></TableDetail></div>
+        return <div className="table" draggable="true" onDragStart={drag} id="diningTable" key={index} >{number.tableName} <TableDetail bookingDetail={props.state.customerDetail}></TableDetail></div>
     })
 
-    // onDragStart={drag()}
 
     function allowDrop(event){
         event.preventDefault();
@@ -23,12 +22,13 @@ const FloorPlan = (props) => {
         event.target.appendChild(document.getElementById(data));
     }
 
-    // onDrop={drop()} onDragOver={allowDrop()}
+   
 
     return (
         <Fragment>
-            <div className="floorplan-container">
-                <div className="floorplan" >
+            <div className="floorplan-container" >
+                <div className="floorplan" onDrop={drop} onDragOver={allowDrop}>
+                {/* I think this grid needs to be a table or a load of divs */}
                     {tables}
                  </div>
             </div>
