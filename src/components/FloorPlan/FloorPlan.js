@@ -4,8 +4,10 @@ import TableDetail from './TableDetail';
 
 const FloorPlan = (props) => {
     const tables = props.state.diningTables.map((number, index) => {
-        return <div className="table" draggable="true" onDragStart="drag(event)" id="diningTable" key={index} >{number.tableName} <TableDetail bookingDetail={props.state.customerDetail}></TableDetail></div>
+        return <div className="table" draggable="true"  id="diningTable" key={index} >{number.tableName} <TableDetail bookingDetail={props.state.customerDetail}></TableDetail></div>
     })
+
+    // onDragStart={drag()}
 
     function allowDrop(event){
         event.preventDefault();
@@ -21,10 +23,12 @@ const FloorPlan = (props) => {
         event.target.appendChild(document.getElementById(data));
     }
 
+    // onDrop={drop()} onDragOver={allowDrop()}
+
     return (
         <Fragment>
             <div className="floorplan-container">
-                <div className="floorplan" onDrop="drop(event)" onDragOver="allowDrop(event)">
+                <div className="floorplan" >
                     {tables}
                  </div>
             </div>
