@@ -11,7 +11,7 @@ class Main extends Component {
         super(props)
         this.state = {
           selectedDate: '',
-          diningTables: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          diningTables: [],
           customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
           bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
           urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
@@ -68,25 +68,27 @@ class Main extends Component {
       return (
         <Router>
         <Fragment>
-              <Switch>
-                <Route
-                  path="/floor-plan"
-                  render={() => {
-                    return <FloorPlan state={this.state} />
-                  }}
-                />
-                <Route
-                  path="/booking-forecast"
-                  render={() => {
-                    return <BookingForecast tables={this.state.diningTables} />
-                  }}
-                />
-                <Route component={ErrorPage}/>
-              </Switch>
+            <Switch>
+              <Route
+                path="/floor-plan"
+                render={() => {
+                  return <FloorPlan state={this.state} />
+                }}
+              />
+              <Route
+                path="/booking-forecast"
+                render={() => {
+                  return <BookingForecast tables={this.state.diningTables} />
+                }}
+              />
+              <Route component={ErrorPage}/>
+            </Switch>
           <NavBar
             makeBooking={this.makeBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate} />
+          <FloorPlan state={this.state} />
+          <BookingForecast diningTables={this.state.diningTables} />
         </Fragment>
         </Router>
 
