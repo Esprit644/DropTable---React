@@ -11,8 +11,8 @@ const BookingForm = (props) => {
     const [filteredCustomers, setfilteredCustomers] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState('');
     const [foundName, setFoundName] = useState('');
-    const [foundNumber, setFoundNumber] = useState('');
     const [visible, setVisible] = useState('');
+    const [href, setHref] = useState('');
 
     useEffect(() => {
         if(!customerName) {
@@ -31,7 +31,8 @@ const BookingForm = (props) => {
     useEffect(() => {
         props.customers.forEach(customer => {
             if(customer.name === selectedCustomer){
-                setFoundNumber(customer.phoneNumber)
+                setPhone(customer.phoneNumber)
+                setHref(customer['_links'].self.href)
             }
         })
     }, [selectedCustomer])
@@ -54,11 +55,12 @@ const BookingForm = (props) => {
     function makeBookingObject() {
       const newDate = convertSlashToHyphen(date)
         const bookingDetails = {
-            name: customerName,
+            name: foundName,
             phone_number: phone,
             size: size,
             date: newDate,
-            time: time
+            time: time,
+            href: href,
         }
         return bookingDetails;
     }
@@ -109,7 +111,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="phone">Phone Number: </label>
-                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} value={foundNumber} ></input>
+                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} value={phone} ></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="size">Party Size: </label>
