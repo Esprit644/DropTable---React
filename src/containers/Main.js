@@ -31,7 +31,7 @@ class Main extends Component {
   makeBooking(booking) {
     const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
     if (booking.href == '') {
-      this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")}
+      this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
 
       const bookingCustomer = []
 
@@ -41,13 +41,15 @@ class Main extends Component {
         }
       })
       console.log(booking)
+
       const customerURL = bookingCustomer[0]['_links'].self.href
-      const tableURL = 'http://localhost:8080/diningTables/1'
+      const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`
       const bookDetails = { date: booking.date, time: booking.time, partySize: booking.size, customer: customerURL, diningTable: tableURL }
 
       this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
     }
-  
+  }
+
 
   postDetails(url, body, stateKey) {
     fetch(url, {
@@ -97,13 +99,16 @@ class Main extends Component {
             <Route
               path="/floor-plan"
               render={() => {
-                return <FloorPlan updateSelectedTable={this.updateSelectedTable} state={this.state} />
+                return <FloorPlan
+                  updateSelectedTable={this.updateSelectedTable}
+                  selectedPartySize={this.state.selectedPartySize}
+                  state={this.state} />
               }}
             />
             <Route
               path="/booking-forecast"
               render={() => {
-                return <BookingForecast diningTables={this.state.diningTables} bookings={this.state.bookings} />
+                return <BookingForecast selectedDate={this.state.selectedDate} diningTables={this.state.diningTables} />
               }}
             />
             <Route component={ErrorPage} />
@@ -113,16 +118,13 @@ class Main extends Component {
             makeBooking={this.makeBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate}
-            tables={this.state.diningTables} 
+            tables={this.state.diningTables}
+            selectedTable={this.state.selectedTable}
             updatePartySize={this.updatePartySize} />
-          
         </Fragment>
       </Router>
-
     )
   }
 }
 
 export default Main;
-
-// <BookingForecast tables={this.state.diningTables} />
