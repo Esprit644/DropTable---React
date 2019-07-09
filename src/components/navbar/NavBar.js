@@ -19,7 +19,8 @@ const NavBar = (props) => {
                 <BookingForm
                   makeBooking={props.makeBooking}
                   customers={props.customers}
-                  updatePartySize={props.updatePartySize}/>
+                  updatePartySize={props.updatePartySize}
+                  numOfTables={props.tables.length}/>
             </div>
         </nav>
 

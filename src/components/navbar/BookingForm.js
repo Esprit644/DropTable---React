@@ -6,6 +6,7 @@ const BookingForm = (props) => {
     const [customerName, setCustomerName] = useState('');
     const [phone, setPhone] = useState('');
     const [size, setSize] = useState(0);
+    const [table, setTable] = useState(1);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [filteredCustomers, setfilteredCustomers] = useState([]);
@@ -42,12 +43,11 @@ const BookingForm = (props) => {
         setCustomerName('');
         setPhone('');
         setSize(0);
+        setTable(1);
         setDate('');
         setTime('');
         event.target.reset();
     }
-
-
 
     function handlePartySize() {
       const availableTables = []
@@ -95,6 +95,10 @@ const BookingForm = (props) => {
         props.updatePartySize(event.target.value)
     }
 
+    function handleTableChange(event) {
+      setTable(event.target.value)
+    }
+
     function handleDateChange(event) {
         setDate(event.target.value)
     }
@@ -121,7 +125,11 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="size">Party Size: </label>
-                    <input type="number" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+                    <input type="number" min="1" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+                </div>
+                <div className="form-item">
+                    <label htmlFor="table-number">Table Number: </label>
+                    <input type="number" min="1" max={props.numOfTables} required className="table_number" name="table" onChange={handleTableChange}></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="date">Date: </label>

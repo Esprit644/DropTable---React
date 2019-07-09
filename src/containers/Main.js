@@ -8,6 +8,7 @@ class Main extends Component {
         super(props)
         this.state = {
           availableTables: [],
+          selectedTable: 1,
           selectedPartySize: 0,
           selectedDate: '',
           diningTables: [],
@@ -21,6 +22,7 @@ class Main extends Component {
         this.postDetails = this.postDetails.bind(this);
         this.fetchDetails = this.fetchDetails.bind(this);
         this.updateSelectedDate = this.updateSelectedDate.bind(this);
+        this.updateSelectedTable = this.updateSelectedTable.bind(this);
     }
 
     makeBooking(booking) {
@@ -74,6 +76,10 @@ class Main extends Component {
           ))
     }
 
+    updateSelectedTable(newTable) {
+      this.setState({selectedTable: newTable})
+    }
+
     updateSelectedDate(newDate) {
       this.setState({selectedDate: newDate})
     }
@@ -91,10 +97,11 @@ class Main extends Component {
     render() {
       return (
         <Fragment>
-        <h2>{this.state.customerId}</h2>
+        <h2>selected table: {this.state.selectedTable}</h2>
         <FloorPlan
           state={this.state}
-          selectedPartySize={this.state.selectedPartySize} />
+          selectedPartySize={this.state.selectedPartySize}
+          updateSelectedTable={this.updateSelectedTable}/>
         <NavBar
           updatePartySize={this.updatePartySize}
           makeBooking={this.makeBooking}
