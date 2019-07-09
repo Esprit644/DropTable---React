@@ -2,6 +2,9 @@ import React, { Component, Fragment } from 'react';
 import FloorPlan from '../components/FloorPlan/FloorPlan'
 import BookingForecast from '../components/BookingForecast';
 import NavBar from '../components/navbar/NavBar';
+import ErrorPage from "../components/ErrorPage";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import SwitchToggle from '../components/navbar/SwitchToggle';
 
 class Main extends Component {
     constructor(props) {
@@ -63,14 +66,32 @@ class Main extends Component {
 
     render() {
       return (
+        <Router>
         <Fragment>
+            <Switch>
+              <Route
+                path="/floor-plan"
+                render={() => {
+                  return <FloorPlan state={this.state} />
+                }}
+              />
+              <Route
+                path="/booking-forecast"
+                render={() => {
+                  return <BookingForecast diningTables={this.state.diningTables} />
+                }}
+              />
+              <Route component={ErrorPage}/>
+            </Switch>
+          <NavBar
+            makeBooking={this.makeBooking}
+            customers={this.state.customers}
+            updateSelectedDate={this.updateSelectedDate} />
           <FloorPlan state={this.state} />
-                <BookingForecast tables={this.state.diningTables} />
-                <NavBar
-                  makeBooking={this.makeBooking}
-                  customers={this.state.customers}
-                  updateSelectedDate={this.updateSelectedDate} />
+          <BookingForecast diningTables={this.state.diningTables} />
         </Fragment>
+        </Router>
+
       )
     }
 }
