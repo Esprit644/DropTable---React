@@ -3,7 +3,7 @@ import FloorPlan from '../components/FloorPlan/FloorPlan'
 import BookingForecast from '../components/BookingForecast';
 import NavBar from '../components/navbar/NavBar';
 import ErrorPage from "../components/ErrorPage";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SwitchToggle from '../components/navbar/SwitchToggle';
 
 class Main extends Component {
@@ -33,7 +33,8 @@ class Main extends Component {
 
     makeBooking(booking) {
         const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
-        this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
+        if (booking.href == '') {
+          this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
 
         // let customerURL = `http://localhost:8080/customers/nameId/${booking.name}`
         // fetch(`http://localhost:8080/customers/nameId/${booking.name}`)
@@ -59,28 +60,29 @@ class Main extends Component {
 
         this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
     }
+  }
 
-    postDetails(url, body, stateKey ){
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      })
+  postDetails(url, body, stateKey) {
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
       .then(res => res.json())
       .then(returnData => this.setState(prevState => {
-        return {[`${stateKey}`]: prevState[`${stateKey}`].concat(returnData)}
+        return { [`${stateKey}`]: prevState[`${stateKey}`].concat(returnData) }
       }))
-    }
+  }
 
-    fetchDetails(url, stateKey) {
-      fetch(url)
-          .then(res => res.json())
-          .then(customerData => this.setState({[`${stateKey}`]: customerData._embedded[`${stateKey}`]}
-          ))
-    }
+  fetchDetails(url, stateKey) {
+    fetch(url)
+      .then(res => res.json())
+      .then(customerData => this.setState({ [`${stateKey}`]: customerData._embedded[`${stateKey}`] }
+      ))
+  }
 
     updateSelectedTable(newTable) {
       this.setState({selectedTable: newTable})
@@ -100,9 +102,9 @@ class Main extends Component {
       this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
     }
 
-    render() {
-      return (
-        <Router>
+  render() {
+    return (
+      <Router>
         <Fragment>
             <Switch>
               <Route
@@ -130,10 +132,10 @@ class Main extends Component {
           {/* <FloorPlan state={this.state} />
           <BookingForecast diningTables={this.state.diningTables} /> */}
         </Fragment>
-        </Router>
+      </Router>
 
-      )
-    }
+    )
+  }
 }
 
 export default Main;
