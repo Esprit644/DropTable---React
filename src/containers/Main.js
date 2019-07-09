@@ -116,7 +116,7 @@ class Main extends Component {
               />
               <Route component={ErrorPage}/>
             </Switch>
-          <h2>selected table: {this.state.selectedTable}</h2>
+          {/* <h2>selected table: {this.state.selectedTable}</h2> */}
           <NavBar
             makeBooking={this.makeBooking}
             customers={this.state.customers}

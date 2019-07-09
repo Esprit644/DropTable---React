@@ -25,12 +25,26 @@ const BookingForecast = (props) => {
     // return a div with the css attached
     // send those divs down to the forecast
 
+    const testArray = [
+        {
+        "time": 41,
+        "diningTable": {
+          "id": 2
+        }
+        },
+        {
+        "time": 25,
+        "diningTable": {
+          "id": 1
+        }
+        }]
+
     function fillTimeSlots(arrayOfBookings){
         const bookedTables = []
         for(const booking of arrayOfBookings){
             const timeStart = booking.time
             const tableNumber = booking.diningTable.id
-            const timeStartAdjusted = timeStart/100
+            const timeStartAdjusted = timeStart
             const tableNumberAdjusted = tableNumber + 2
 
             const booked = {
@@ -63,7 +77,7 @@ const BookingForecast = (props) => {
                 </div>
                 <div className="forecast" style={forecast} >
                     {displayTimes}
-                    {fillTimeSlots}
+                    {fillTimeSlots(testArray)}
                 </div>
             </div>
         </Fragment>
