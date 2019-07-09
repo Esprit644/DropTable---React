@@ -15,10 +15,28 @@ const FloorPlan = (props) => {
         return <button className="table" key={index} value={index+1} onClick={handleClick}>{table.tableName}</button>
     })
 
+    // onDragStart={drag()}
+
+    function allowDrop(event){
+        event.preventDefault();
+    }
+
+    function drag (event){
+        event.dataTransfer.setData("diningTable", event.target.id);
+    }
+
+    function drop (event){
+        event.preventDefault();
+        const data = event.dataTransfer.getData("diningTable");
+        event.target.appendChild(document.getElementById(data));
+    }
+
+    // onDrop={drop()} onDragOver={allowDrop()}
+
     return (
         <Fragment>
             <div className="floorplan-container">
-                <div className="floorplan">
+                <div className="floorplan" >
                     {tables}
                  </div>
             </div>
