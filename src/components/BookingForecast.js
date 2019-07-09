@@ -14,12 +14,24 @@ const BookingForecast = (props) => {
     }
 
     let times = [];
-    // for (let index = 0; index < 11; index++) {
-    //     times.push(index);
+    for (let index = 12; index < 23; index++) {
+        times.push(index +":00");
+    }
+
+    // function fillTimeSlot(){
+
     // }
+
     const displayTimes = times.map((time, index) => {
         return <div key={index} className="time">{time}</div>
     })
+
+    const numberOfTables = tables.length;
+
+    const forecast = { 
+        gridTemplateRows: "3vh repeat(" + numberOfTables + ", 1fr)"
+    };
+
 
     return (
         <Fragment>
@@ -27,7 +39,7 @@ const BookingForecast = (props) => {
                 <div className="tableNames">
                     {tableNumbers}
                 </div>
-                <div className="forecast">
+                <div className="forecast" style={forecast}>
                     {displayTimes}
                 </div>
             </div>
