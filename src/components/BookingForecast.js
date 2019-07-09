@@ -25,12 +25,12 @@ const BookingForecast = (props) => {
     // return a div with the css attached
     // send those divs down to the forecast
 
-    function fillTimeSlot(arrayOfBookings){
-        bookedTables = []
-        for(booking of arrayOfBookings){
+    function fillTimeSlots(arrayOfBookings){
+        const bookedTables = []
+        for(const booking of arrayOfBookings){
             const timeStart = booking.time
             const tableNumber = booking.diningTable.id
-            const timeStartAdjusted = timeStart + 4
+            const timeStartAdjusted = timeStart/100
             const tableNumberAdjusted = tableNumber + 2
 
             const booked = {
@@ -39,22 +39,12 @@ const BookingForecast = (props) => {
                 backgroundColor: '#4cd4a0'
                }
 
-              bookedTables.push(<div style={booked}></div>) 
+            bookedTables.push(<div style={booked}></div>) 
 
         }
+        return bookedTables
     }
     
-        const timeStart = 21;
-        const tableNumber = 3;
-
-       
-       
-
-        
-        
-    
-
-
     const displayTimes = times.map((time, index) => {
         return <div key={index} className="time">{time}</div>
     })
@@ -73,7 +63,7 @@ const BookingForecast = (props) => {
                 </div>
                 <div className="forecast" style={forecast} >
                     {displayTimes}
-                    {bookedTables}
+                    {fillTimeSlots}
                 </div>
             </div>
         </Fragment>
