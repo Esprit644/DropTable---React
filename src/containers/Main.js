@@ -7,57 +7,47 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SwitchToggle from '../components/navbar/SwitchToggle';
 
 class Main extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-          availableTables: [],
-          selectedTable: 1,
-          selectedPartySize: 0,
-          selectedDate: '',
-          diningTables: [],
-          customers: [],
-          bookings: [],
-          customerId: 0,
-          urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
-        }
-        this.updatePartySize = this.updatePartySize.bind(this);
-        this.makeBooking = this.makeBooking.bind(this);
-        this.postDetails = this.postDetails.bind(this);
-        this.fetchDetails = this.fetchDetails.bind(this);
-        this.updateSelectedDate = this.updateSelectedDate.bind(this);
-        this.updateSelectedTable = this.updateSelectedTable.bind(this);
+  constructor(props) {
+    super(props)
+    this.state = {
+      availableTables: [],
+      selectedTable: 1,
+      selectedPartySize: 0,
+      selectedDate: '',
+      diningTables: [],
+      customers: [],
+      bookings: [],
+      customerId: 0,
+      urls: [{ customersURL: 'http://localhost:8080/customers' }, { bookingsURL: 'http://localhost:8080/bookings' }, { diningTablesURL: 'http://localhost:8080/diningTables' }]
     }
-
-    makeBooking(booking) {
-        const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
-        if (booking.href == '') {
-          this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
-
-        // let customerURL = `http://localhost:8080/customers/nameId/${booking.name}`
-        // fetch(`http://localhost:8080/customers/nameId/${booking.name}`)
-        //   .then(res => res.json())
-        //   .then(customerData => this.setState(prevState => {
-        //     return {customerId: customerData[0].id}
-        //   })
-        // )
-
-        const bookingCustomer = []
-
-        this.state.customers.forEach((customer) => {
-          if (customer.name === booking.name) {
-            console.log(customer)
-
-            bookingCustomer.push(customer)
-          }
-        })
-
-        const customerURL = bookingCustomer[0]['_links'].self.href
-        const tableURL = 'http://localhost:8080/diningTables/1'
-        const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size, customer: customerURL, diningTable: tableURL }
-
-        this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
-    }
+    this.updatePartySize = this.updatePartySize.bind(this);
+    this.makeBooking = this.makeBooking.bind(this);
+    this.postDetails = this.postDetails.bind(this);
+    this.fetchDetails = this.fetchDetails.bind(this);
+    this.updateSelectedDate = this.updateSelectedDate.bind(this);
+    this.updateSelectedTable = this.updateSelectedTable.bind(this);
   }
+
+  makeBooking(booking) {
+    const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
+    if (booking.href == '') {
+      this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")}
+
+      const bookingCustomer = []
+
+      this.state.customers.forEach((customer) => {
+        if (customer.name === booking.name) {
+          bookingCustomer.push(customer)
+        }
+      })
+      console.log(booking)
+      const customerURL = bookingCustomer[0]['_links'].self.href
+      const tableURL = 'http://localhost:8080/diningTables/1'
+      const bookDetails = { date: booking.date, time: booking.time, partySize: booking.size, customer: customerURL, diningTable: tableURL }
+
+      this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
+    }
+  
 
   postDetails(url, body, stateKey) {
     fetch(url, {
@@ -81,52 +71,51 @@ class Main extends Component {
       ))
   }
 
-    updateSelectedTable(newTable) {
-      this.setState({selectedTable: newTable})
-    }
+  updateSelectedTable(newTable) {
+    this.setState({ selectedTable: newTable })
+  }
 
-    updateSelectedDate(newDate) {
-      this.setState({selectedDate: newDate})
-    }
+  updateSelectedDate(newDate) {
+    this.setState({ selectedDate: newDate })
+  }
 
-    updatePartySize(size) {
-      this.setState({selectedPartySize: size})
-    }
+  updatePartySize(size) {
+    this.setState({ selectedPartySize: size })
+  }
 
-    componentDidMount(){
-      this.fetchDetails(this.state.urls[0].customersURL, "customers")
-      this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
-      this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
-    }
+  componentDidMount() {
+    this.fetchDetails(this.state.urls[0].customersURL, "customers")
+    this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
+    this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
+  }
 
   render() {
     return (
       <Router>
         <Fragment>
-            <Switch>
-              <Route
-                path="/floor-plan"
-                render={() => {
-                  return <FloorPlan updateSelectedTable={this.updateSelectedTable} state={this.state} />
-                }}
-              />
-              <Route
-                path="/booking-forecast"
-                render={() => {
-                  return <BookingForecast diningTables={this.state.diningTables} />
-                }}
-              />
-              <Route component={ErrorPage}/>
-            </Switch>
+          <Switch>
+            <Route
+              path="/floor-plan"
+              render={() => {
+                return <FloorPlan updateSelectedTable={this.updateSelectedTable} state={this.state} />
+              }}
+            />
+            <Route
+              path="/booking-forecast"
+              render={() => {
+                return <BookingForecast diningTables={this.state.diningTables} bookings={this.state.bookings} />
+              }}
+            />
+            <Route component={ErrorPage} />
+          </Switch>
           <h2>selected table: {this.state.selectedTable}</h2>
           <NavBar
             makeBooking={this.makeBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate}
-            tables={this.state.diningTables}/>
-
-          {/* <FloorPlan state={this.state} />
-          <BookingForecast diningTables={this.state.diningTables} /> */}
+            tables={this.state.diningTables} 
+            updatePartySize={this.updatePartySize} />
+          
         </Fragment>
       </Router>
 

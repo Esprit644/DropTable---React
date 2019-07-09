@@ -15,15 +15,15 @@ const BookingForm = (props) => {
     const [visible, setVisible] = useState('');
     const [href, setHref] = useState('');
 
-    // useEffect(() => {
-    //     if(!customerName) {
-    //         setfilteredCustomers([])
-    //         return
-    //     }
-    //     fetch(`http://localhost:8080/customers/partialname/${customerName}`)
-    //     .then(res => res.json())
-    //     .then(data => setfilteredCustomers(data))
-    // },[customerName])
+    useEffect(() => {
+        if(!customerName) {
+            setfilteredCustomers([])
+            return
+        }
+        fetch(`http://localhost:8080/customers/partialname/${customerName}`)
+        .then(res => res.json())
+        .then(data => setfilteredCustomers(data))
+    },[customerName])
 
     useEffect(() => {
         setFoundName(selectedCustomer)
@@ -50,11 +50,6 @@ const BookingForm = (props) => {
         event.target.reset();
     }
 
-    function handlePartySize() {
-      const availableTables = []
-
-    }
-
     function convertSlashToHyphen(date) {
       return date.replace('/', '-')
     }
@@ -75,7 +70,6 @@ const BookingForm = (props) => {
     const searchOptions = filteredCustomers.map((customer, index) => {
         return <p key={index} onClick={handleSelectedCustomer}>{customer.name}</p>
     })
-
 
     function handleSelectedCustomer(event){
         setSelectedCustomer(event.target.innerHTML)
@@ -108,9 +102,6 @@ const BookingForm = (props) => {
     function handleTimeChange(event) {
         setTime(event.target.value)
     }
-
-
-
 
     return (
         <form className="booking_form" onSubmit={handleSubmit}>
