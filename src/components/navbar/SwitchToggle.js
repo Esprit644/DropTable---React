@@ -1,15 +1,19 @@
-import React from 'react'
+import React from 'react';
+import {Link} from 'react-router-dom';
 
-const SwitchToggle = () => {
+const SwitchToggle = () => (
 
-    return (
-        <div class="switch-container">
-            <label class="switch">
-                <input type="checkbox"></input>
-                <span class="slider round"></span>
-            </label>
-        </div>
-    )
-}
+          <ul>
+            <li className="toggles">
+                <Link to="/booking-forecast">Booking Forecast</Link>
+            </li>
+            <li className="toggles">
+                <Link to="/floor-plan">Floor Plan</Link>
+            </li>
+         </ul> 
+
+     
+    
+)
 
 export default SwitchToggle;             

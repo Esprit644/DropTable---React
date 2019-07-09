@@ -4,6 +4,7 @@ import BookingForecast from '../components/BookingForecast';
 import NavBar from '../components/navbar/NavBar';
 import ErrorPage from "../components/ErrorPage";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import SwitchToggle from '../components/navbar/SwitchToggle';
 
 class Main extends Component {
     constructor(props) {
@@ -65,9 +66,8 @@ class Main extends Component {
 
     render() {
       return (
+        <Router>
         <Fragment>
-          <Router>
-            <React.Fragment>
               <Switch>
                 <Route
                   path="/floor-plan"
@@ -82,16 +82,14 @@ class Main extends Component {
                   }}
                 />
                 <Route component={ErrorPage}/>
-     
               </Switch>
-            </React.Fragment>
-          </Router>
-      
           <NavBar
             makeBooking={this.makeBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate} />
         </Fragment>
+        </Router>
+
       )
     }
 }
