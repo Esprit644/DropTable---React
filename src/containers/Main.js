@@ -36,14 +36,6 @@ class Main extends Component {
         if (booking.href == '') {
           this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
 
-        // let customerURL = `http://localhost:8080/customers/nameId/${booking.name}`
-        // fetch(`http://localhost:8080/customers/nameId/${booking.name}`)
-        //   .then(res => res.json())
-        //   .then(customerData => this.setState(prevState => {
-        //     return {customerId: customerData[0].id}
-        //   })
-        // )
-
         const bookingCustomer = []
 
         this.state.customers.forEach((customer) => {
@@ -55,8 +47,8 @@ class Main extends Component {
         })
 
         const customerURL = bookingCustomer[0]['_links'].self.href
-        const tableURL = 'http://localhost:8080/diningTables/1'
-        const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size, customer: customerURL, diningTable: tableURL }
+        const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`
+        const bookDetails = { date: booking.date, time: booking.time, partySize: booking.size, customer: customerURL, diningTable: tableURL }
 
         this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
     }
