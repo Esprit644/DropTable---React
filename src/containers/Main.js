@@ -105,7 +105,7 @@ class Main extends Component {
               <Route
                 path="/floor-plan"
                 render={() => {
-                  return <FloorPlan state={this.state} />
+                  return <FloorPlan updateSelectedTable={this.updateSelectedTable} state={this.state} />
                 }}
               />
               <Route
@@ -120,7 +120,9 @@ class Main extends Component {
           <NavBar
             makeBooking={this.makeBooking}
             customers={this.state.customers}
-            updateSelectedDate={this.updateSelectedDate} />
+            updateSelectedDate={this.updateSelectedDate}
+            tables={this.state.diningTables}/>
+
           {/* <FloorPlan state={this.state} />
           <BookingForecast diningTables={this.state.diningTables} /> */}
         </Fragment>
