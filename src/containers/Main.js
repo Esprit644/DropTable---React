@@ -81,6 +81,14 @@ class Main extends Component {
 
   updateSelectedDate(newDate) {
     this.setState({ selectedDate: newDate })
+    this.setState({todaysBookings: []})
+    this.state.bookings.forEach(booking => {
+      if(this.state.selectedDate == booking.date){
+        this.setState(prevState => {
+          return {todaysBookings: prevState.todaysBookings.concat(booking)}
+        })
+      }
+    })
   }
 
   updatePartySize(size) {
@@ -110,7 +118,7 @@ class Main extends Component {
             <Route
               path="/booking-forecast"
               render={() => {
-                return <BookingForecast selectedDate={this.state.selectedDate} diningTables={this.state.diningTables} />
+                return <BookingForecast selectedDate={this.state.selectedDate} diningTables={this.state.diningTables} bookings={this.state.todaysBookings}/>
               }}
             />
             <Route component={ErrorPage} />

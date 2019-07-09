@@ -4,7 +4,6 @@ import './BookingForecast.css';
 const BookingForecast = (props) => {
 
     const [tables, setTable] = useState([])
-    const [bookings, setBookings] = useState([]);
 
     const date = '12-07-2019'
 
@@ -17,12 +16,6 @@ const BookingForecast = (props) => {
         tableNumbers.push(<p key={index} className="tableName">{index + 1}</p>);
         tableIndexNumbers.push(index + 1)
     }
-    
-    tableIndexNumbers.forEach((index) => {
-        fetch(`http://localhost:8080/bookings/tableanddate/${index}/${date}`)
-            .then(res => res.json())
-            .then(bookingData => (bookingData))
-    })
 
     let times = [];
     // for (let index = 0; index < 11; index++) {
@@ -44,7 +37,6 @@ const BookingForecast = (props) => {
             </div>
         </Fragment>
     )
-
 }
 
 export default BookingForecast;
