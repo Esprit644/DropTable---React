@@ -78,7 +78,7 @@ class Main extends Component {
               <Route
                 path="/booking-forecast"
                 render={() => {
-                  return <BookingForecast tables={this.state.diningTables} />
+                  return <BookingForecast diningTables={this.state.diningTables} />
                 }}
               />
               <Route component={ErrorPage}/>
