@@ -27,25 +27,28 @@ const BookingForecast = (props) => {
 
     const testArray = [
         {
-        "time": 41,
+        "time": "12:00",
         "diningTable": {
-          "id": 2
+          "id": 1
         }
         },
         {
-        "time": 25,
+        "time": "21:00",
         "diningTable": {
-          "id": 1
+          "id": 2
         }
         }]
 
     function fillTimeSlots(arrayOfBookings){
         const bookedTables = []
         for(const booking of arrayOfBookings){
-            const timeStart = booking.time
-            const tableNumber = booking.diningTable.id
-            const timeStartAdjusted = timeStart
-            const tableNumberAdjusted = tableNumber + 2
+            const timeStart = booking.time;
+            const timeWithoutDashes = timeStart.replace(":", "");
+            const timeStartToInteger = parseInt(timeWithoutDashes);
+            const timeStartAdjusted = (((timeStartToInteger - 1200)/25) + 9);
+
+            const tableNumber = booking.diningTable.id;
+            const tableNumberAdjusted = tableNumber + 2;
 
             const booked = {
                 gridColumn: ' span 8 /' + timeStartAdjusted,
