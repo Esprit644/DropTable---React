@@ -11,14 +11,17 @@ class Main extends Component {
         super(props)
         this.state = {
           availableTables: [],
-          selectedTable: 1,
+          selectedTable: 2,
           selectedPartySize: 0,
           selectedDate: '',
           diningTables: [],
           customers: [],
           bookings: [],
           customerId: 0,
-          urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
+          urls: [
+            {customersURL:'http://localhost:8080/customers'},
+            {bookingsURL: 'http://localhost:8080/bookings'},
+            {diningTablesURL: 'http://localhost:8080/diningTables'}]
         }
         this.updatePartySize = this.updatePartySize.bind(this);
         this.makeBooking = this.makeBooking.bind(this);
@@ -121,7 +124,8 @@ class Main extends Component {
             makeBooking={this.makeBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate}
-            tables={this.state.diningTables}/>
+            tables={this.state.diningTables}
+            selectedTable={this.state.selectedTable}/>
 
           {/* <FloorPlan state={this.state} />
           <BookingForecast diningTables={this.state.diningTables} /> */}

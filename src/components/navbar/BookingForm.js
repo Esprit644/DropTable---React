@@ -6,7 +6,7 @@ const BookingForm = (props) => {
     const [customerName, setCustomerName] = useState('');
     const [phone, setPhone] = useState('');
     const [size, setSize] = useState(0);
-    const [table, setTable] = useState(1);
+    const [table, setTable] = useState(0);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [filteredCustomers, setfilteredCustomers] = useState([]);
@@ -129,7 +129,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="table-number">Table Number: </label>
-                    <input type="number" min="1" max={props.numOfTables} required className="table_number" name="table" onChange={handleTableChange}></input>
+                    <input type="number" min="1" max={props.numOfTables} required className="table_number" name="table" value={props.selectedTable} onChange={handleTableChange}></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="date">Date: </label>
