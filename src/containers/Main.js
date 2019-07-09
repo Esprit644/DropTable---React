@@ -17,6 +17,7 @@ class Main extends Component {
       diningTables: [],
       customers: [],
       bookings: [],
+      todaysBookings: [],
       customerId: 0,
       urls: [{ customersURL: 'http://localhost:8080/customers' }, { bookingsURL: 'http://localhost:8080/bookings' }, { diningTablesURL: 'http://localhost:8080/diningTables' }]
     }
@@ -50,6 +51,7 @@ class Main extends Component {
     }
   }
 
+  
 
   postDetails(url, body, stateKey) {
     fetch(url, {
