@@ -4,12 +4,10 @@ import TableDetail from './TableDetail';
 
 const FloorPlan = (props) => {
     const tables = props.state.diningTables.map((table, index) => {
-      console.log(table.capacity)
-      console.log(props.selectedPartySize)
       if (table.capacity < parseInt(props.selectedPartySize)) {
-        return <div className="table-busy" key={index} >{table.tableName}</div>
+        return <button className="table-busy" key={index} >{table.tableName}</button>
       }
-        return <div className="table" key={index} >{table.tableName}</div>
+        return <button className="table" key={index} >{table.tableName}</button>
     })
 
     return (

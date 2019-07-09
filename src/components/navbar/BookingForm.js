@@ -14,15 +14,15 @@ const BookingForm = (props) => {
     const [foundNumber, setFoundNumber] = useState('');
     const [visible, setVisible] = useState('');
 
-    useEffect(() => {
-        if(!customerName) {
-            setfilteredCustomers([])
-            return
-        }
-        fetch(`http://localhost:8080/customers/partialname/${customerName}`)
-        .then(res => res.json())
-        .then(data => setfilteredCustomers(data))
-    },[customerName])
+    // useEffect(() => {
+    //     if(!customerName) {
+    //         setfilteredCustomers([])
+    //         return
+    //     }
+    //     fetch(`http://localhost:8080/customers/partialname/${customerName}`)
+    //     .then(res => res.json())
+    //     .then(data => setfilteredCustomers(data))
+    // },[customerName])
 
     useEffect(() => {
         setFoundName(selectedCustomer)
@@ -117,7 +117,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="phone">Phone Number: </label>
-                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} value={foundNumber} ></input>
+                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange}  ></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="size">Party Size: </label>

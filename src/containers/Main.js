@@ -11,8 +11,9 @@ class Main extends Component {
           selectedPartySize: 0,
           selectedDate: '',
           diningTables: [],
-          customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
-          bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
+          customers: [],
+          bookings: [],
+          customerId: 0,
           urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
         }
         this.updatePartySize = this.updatePartySize.bind(this);
@@ -24,12 +25,31 @@ class Main extends Component {
 
     makeBooking(booking) {
         const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
-        const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size }
-        this.setState((prevState)=> {
-            return {bookings: prevState.bookings.concat(bookDetails)}
-        })
         this.postDetails(this.state.urls[0].customersURL, custDetails, "customers")
 
+        // let customerURL = `http://localhost:8080/customers/nameId/${booking.name}`
+        // fetch(`http://localhost:8080/customers/nameId/${booking.name}`)
+        //   .then(res => res.json())
+        //   .then(customerData => this.setState(prevState => {
+        //     return {customerId: customerData[0].id}
+        //   })
+        // )
+
+        const bookingCustomer = []
+
+        this.state.customers.forEach((customer) => {
+          if (customer.name === booking.name) {
+            console.log(customer)
+
+            bookingCustomer.push(customer)
+          }
+        })
+
+        const customerURL = bookingCustomer[0]['_links'].self.href
+        const tableURL = 'http://localhost:8080/diningTables/1'
+        const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size, customer: customerURL, diningTable: tableURL }
+
+        this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings")
     }
 
     postDetails(url, body, stateKey ){
@@ -65,11 +85,13 @@ class Main extends Component {
     componentDidMount(){
       this.fetchDetails(this.state.urls[0].customersURL, "customers")
       this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
+      this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
     }
 
     render() {
       return (
         <Fragment>
+        <h2>{this.state.customerId}</h2>
         <FloorPlan
           state={this.state}
           selectedPartySize={this.state.selectedPartySize} />
