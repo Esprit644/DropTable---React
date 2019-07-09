@@ -1,0 +1,39 @@
+.forecast{
+    border: 1px solid black;
+    width: 90%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(44, 1fr);
+    grid-template-rows: 20px repeat(3, 1fr);
+}
+
+.time{
+    grid-column: span 4;
+    border: 1px solid black;
+}
+
+.tableNames{
+    height: 100%;
+    width: 10%;
+    display: grid;
+    grid-template-rows: 20px repeat(auto-fill, 1fr);
+    border: 1px solid black;
+    float: left;
+}
+
+.blank{
+    background-color: black;
+    margin: 0;
+}
+
+.tableName{
+    border: 1px solid black;
+    margin: 0;
+}
+
+.view{
+    height: 90vh;
+    width: 70vw;
+    float: left;
+    display: flex;
+}

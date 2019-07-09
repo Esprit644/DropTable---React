@@ -2,13 +2,16 @@ import React, { Component, Fragment } from 'react';
 import FloorPlan from '../components/FloorPlan/FloorPlan'
 import BookingForecast from '../components/BookingForecast';
 import NavBar from '../components/navbar/NavBar';
+import ErrorPage from "../components/ErrorPage";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import SwitchToggle from '../components/navbar/SwitchToggle';
 
 class Main extends Component {
     constructor(props) {
         super(props)
         this.state = {
           selectedDate: '',
-          diningTables: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          diningTables: [],
           customers: [{ name: "Fred", phone: "07800900900", counter: 0 }],
           bookings: [{ date: "01/01/2019", time: "18:00", party_size: 4 }],
           urls: [{customersURL:'http://localhost:8080/customers'}, {bookingsURL: 'http://localhost:8080/bookings'}, {diningTablesURL: 'http://localhost:8080/diningTables'}]
@@ -20,7 +23,7 @@ class Main extends Component {
     }
 
     makeBooking(booking) {
-        const custDetails = { name: booking.name, phone_number: booking.phone_number }
+        const custDetails = { name: booking.name, phoneNumber: booking.phone_number }
         const bookDetails = { date: booking.date, time: booking.time, party_size: booking.size }
         this.setState((prevState)=> {
             return {bookings: prevState.bookings.concat(bookDetails)}
@@ -57,23 +60,38 @@ class Main extends Component {
 
 
     componentDidMount(){
-        fetch('http://localhost:8080/customers')
-            .then(res => res.json())
-            .then(customerData => this.setState({customers: customerData._embedded.customers}
-            ))
-        this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
+      this.fetchDetails(this.state.urls[0].customersURL, "customers")
+      this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables")
     }
 
     render() {
       return (
+        <Router>
         <Fragment>
+            <Switch>
+              <Route
+                path="/floor-plan"
+                render={() => {
+                  return <FloorPlan state={this.state} />
+                }}
+              />
+              <Route
+                path="/booking-forecast"
+                render={() => {
+                  return <BookingForecast diningTables={this.state.diningTables} />
+                }}
+              />
+              <Route component={ErrorPage}/>
+            </Switch>
+          <NavBar
+            makeBooking={this.makeBooking}
+            customers={this.state.customers}
+            updateSelectedDate={this.updateSelectedDate} />
           <FloorPlan state={this.state} />
-                <BookingForecast tables={this.state.tables} />
-                <NavBar
-                  makeBooking={this.makeBooking}
-                  customers={this.state.customers}
-                  updateSelectedDate={this.updateSelectedDate} />
+          <BookingForecast diningTables={this.state.diningTables} />
         </Fragment>
+        </Router>
+
       )
     }
 }
