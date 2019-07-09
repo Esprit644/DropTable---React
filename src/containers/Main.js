@@ -110,7 +110,10 @@ class Main extends Component {
               <Route
                 path="/floor-plan"
                 render={() => {
-                  return <FloorPlan updateSelectedTable={this.updateSelectedTable} state={this.state} />
+                  return <FloorPlan
+                  updateSelectedTable={this.updateSelectedTable}
+                  selectedPartySize={this.state.selectedPartySize}
+                  state={this.state} />
                 }}
               />
               <Route
@@ -127,7 +130,8 @@ class Main extends Component {
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate}
             tables={this.state.diningTables}
-            selectedTable={this.state.selectedTable}/>
+            selectedTable={this.state.selectedTable}
+            updatePartySize={this.updatePartySize}/>
 
           {/* <FloorPlan state={this.state} />
           <BookingForecast diningTables={this.state.diningTables} /> */}
