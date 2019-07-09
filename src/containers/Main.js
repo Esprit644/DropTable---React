@@ -87,8 +87,8 @@ class Main extends Component {
             makeBooking={this.makeBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate} />
-          <FloorPlan state={this.state} />
-          <BookingForecast diningTables={this.state.diningTables} />
+          {/* <FloorPlan state={this.state} />
+          <BookingForecast diningTables={this.state.diningTables} /> */}
         </Fragment>
         </Router>
 
