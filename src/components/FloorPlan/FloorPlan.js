@@ -3,8 +3,16 @@ import './FloorPlan.css';
 import TableDetail from './TableDetail';
 
 const FloorPlan = (props) => {
-    const tables = props.state.diningTables.map((number, index) => {
-        return <div className="table" draggable="true"  id="diningTable" key={index} >{number.tableName} <TableDetail bookingDetail={props.state.customerDetail}></TableDetail></div>
+
+  function handleClick(event) {
+    props.updateSelectedTable(event.target.value)
+  }
+
+    const tables = props.state.diningTables.map((table, index) => {
+      if (table.capacity < parseInt(props.selectedPartySize)) {
+        return <button className="table-busy" key={index} value={index+1} onClick={handleClick}>{table.tableName}</button>
+      }
+        return <button className="table" key={index} value={index+1} onClick={handleClick}>{table.tableName}</button>
     })
 
     // onDragStart={drag()}
