@@ -4,6 +4,12 @@
   border: 1px solid black;
 }
 
+.table:focus {
+  background-color: #83D0F2;
+  color: white;
+  outline:0;
+}
+
 .table-busy {
   width: 100px;
   height: 100px;

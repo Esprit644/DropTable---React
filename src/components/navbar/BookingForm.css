@@ -45,6 +45,17 @@
     color: #fff;
 }
 
+.form-delete-button {
+    text-align: center;
+    margin-top: 10px;
+    width: 18vw;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #D44C66;
+    color: #fff;
+}
+
+
 .form-submit-button:focus {
     outline: none;
 }

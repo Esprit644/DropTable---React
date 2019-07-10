@@ -22,25 +22,41 @@ const NavBar = props => {
   //       console.log("value is True inside else statement");
   //       buttonValue = false;
   //     }
-
-  //   }
-
   return (
     <nav id="nav-container">
       <div className="calendar-container">
-        {/* <SwitchToggle /> */}
+        {/* <SwitchToggle/> */}
         <Calendar updateSelectedDate={props.updateSelectedDate} />
       </div>
-
       <div className="booking-form-container">
         <BookingForm
+          updateState={props.updateState}
+          selectedBooking={props.selectedBooking}
           makeBooking={props.makeBooking}
+          deleteBooking={props.deleteBooking}
           customers={props.customers}
           updatePartySize={props.updatePartySize}
           numOfTables={props.tables.length}
+          selectedTable={props.selectedTable}
         />
       </div>
     </nav>
+
+    // <nav id="nav-container">
+    //   <div className="calendar-container">
+    //     {/* <SwitchToggle /> */}
+    //     <Calendar updateSelectedDate={props.updateSelectedDate} />
+    //   </div>
+
+    //   <div className="booking-form-container">
+    //     <BookingForm
+    //       makeBooking={props.makeBooking}
+    //       customers={props.customers}
+    //       updatePartySize={props.updatePartySize}
+    //       numOfTables={props.tables.length}
+    //     />
+    //   </div>
+    // </nav>
   );
 };
 

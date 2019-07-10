@@ -12,7 +12,6 @@ class Calendar extends Component {
       currentDate: new Date().getDate(),
       currentMonth: new Date().getMonth() + 1,
       numOfDaysInMonth: 0,
-      selectedDate: ''
     }
     this.handleDaySelected = this.handleDaySelected.bind(this)
     this.onMonthSelected = this.onMonthSelected.bind(this)
@@ -22,6 +21,7 @@ class Calendar extends Component {
 
   componentDidMount(){
     this.setNumOfDaysInMonth(this.state.currentMonth);
+    this.handleDaySelected(this.state.currentDate, this.state.currentMonth)
   }
 
   setCurrentMonth() {
@@ -36,7 +36,7 @@ class Calendar extends Component {
   handleDaySelected(day, month){
     const newDay = this.handleSingleFigureNum(day)
     const newMonth = this.handleSingleFigureNum(month)
-    const newDate = `${newDay}-${newMonth}-2019`
+    const newDate = `2019-${newMonth}-${newDay}`
     this.props.updateSelectedDate(newDate)
     // this.setState({selectedDate: newDate})
   }

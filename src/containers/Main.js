@@ -11,13 +11,16 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      updateState: false,
       availableTables: [],
       selectedTable: 1,
       selectedPartySize: 0,
       selectedDate: "",
       diningTables: [],
+      selectedBooking: {},
       customers: [],
       bookings: [],
+      todaysBookings: [],
       customerId: 0,
       urls: [
         { customersURL: "http://localhost:8080/customers" },
@@ -27,48 +30,81 @@ class Main extends Component {
     };
     this.updatePartySize = this.updatePartySize.bind(this);
     this.makeBooking = this.makeBooking.bind(this);
+    this.deleteBooking = this.deleteBooking.bind(this);
     this.postDetails = this.postDetails.bind(this);
     this.fetchDetails = this.fetchDetails.bind(this);
     this.updateSelectedDate = this.updateSelectedDate.bind(this);
     this.updateSelectedTable = this.updateSelectedTable.bind(this);
+    this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
+    this.fillTimeSlots = this.fillTimeSlots.bind(this);
+    this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
   }
 
   makeBooking(booking) {
+    let bookingCustomerURL = "";
+
     const custDetails = {
       name: booking.name,
       phoneNumber: booking.phone_number
     };
-    this.postDetails(this.state.urls[0].customersURL, custDetails, "customers");
 
-    // let customerURL = `http://localhost:8080/customers/nameId/${booking.name}`
-    // fetch(`http://localhost:8080/customers/nameId/${booking.name}`)
-    //   .then(res => res.json())
-    //   .then(customerData => this.setState(prevState => {
-    //     return {customerId: customerData[0].id}
-    //   })
-    // )
+    if (booking.href == "") {
+      fetch(this.state.urls[0].customersURL, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(custDetails)
+      })
+        .then(res => res.json())
+        .then(newCustomer =>
+          this.setState(
+            prevState => {
+              bookingCustomerURL = newCustomer["_links"].self.href;
+              return { customers: prevState.customers.concat(newCustomer) };
+            },
+            () => {
+              this.postBooking(booking, newCustomer._links.self.href);
+            }
+          )
+        );
+    } else {
+      this.postBooking(booking, booking.href);
+    }
+  }
 
-    const bookingCustomer = [];
-
-    this.state.customers.forEach(customer => {
-      if (customer.name === booking.name) {
-        console.log(customer);
-
-        bookingCustomer.push(customer);
-      }
-    });
-
-    const customerURL = bookingCustomer[0]["_links"].self.href;
-    const tableURL = "http://localhost:8080/diningTables/1";
+  postBooking(booking, customer) {
+    const tableURL = `http://localhost:8080/diningTables/${
+      this.state.selectedTable
+    }`;
     const bookDetails = {
       date: booking.date,
       time: booking.time,
-      party_size: booking.size,
-      customer: customerURL,
+      partySize: booking.size,
+      customer: customer,
       diningTable: tableURL
     };
-
-    this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings");
+    console.log("bookDetails", bookDetails);
+    fetch(this.state.urls[1].bookingsURL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bookDetails)
+    })
+      .then(res => res.json())
+      .then(newBooking =>
+        this.setState(
+          prevState => {
+            return { bookings: prevState.bookings.concat(newBooking) };
+          },
+          () => {
+            this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+          }
+        )
+      );
   }
 
   postDetails(url, body, stateKey) {
@@ -90,14 +126,45 @@ class Main extends Component {
       );
   }
 
-  fetchDetails(url, stateKey) {
+  fetchDetails(url, stateKey, callback) {
     fetch(url)
       .then(res => res.json())
       .then(customerData =>
-        this.setState({
-          [`${stateKey}`]: customerData._embedded[`${stateKey}`]
-        })
+        this.setState(
+          {
+            [`${stateKey}`]: customerData._embedded[`${stateKey}`]
+          },
+          () => {
+            if (callback) callback();
+          }
+        )
       );
+  }
+
+  deleteBooking() {
+    const deleteURL = `http://localhost:8080/bookings/${
+      this.state.selectedBooking
+    }`;
+    fetch(deleteURL, {
+      method: "DELETE"
+    }).then(res => {
+      if (res.ok) {
+        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+      }
+    });
+  }
+
+  updateSelectedBooking(bookingInfo) {
+    this.setState({ updateState: true });
+    console.log(bookingInfo.time);
+    for (const booking of this.state.todaysBookings) {
+      if (
+        booking.diningTable.tableName === `Table${bookingInfo.tableId}` &&
+        booking.time === bookingInfo.time
+      ) {
+        this.setState({ selectedBooking: booking });
+      }
+    }
   }
 
   updateSelectedTable(newTable) {
@@ -106,16 +173,73 @@ class Main extends Component {
 
   updateSelectedDate(newDate) {
     this.setState({ selectedDate: newDate });
+    this.setState({ todaysBookings: [] });
+    this.state.bookings.forEach(booking => {
+      if (this.state.selectedDate == booking.date) {
+        this.setState(prevState => {
+          return { todaysBookings: prevState.todaysBookings.concat(booking) };
+        });
+      }
+    });
   }
 
   updatePartySize(size) {
     this.setState({ selectedPartySize: size });
   }
 
+  createHandleBookingClick(divValue) {
+    return () => {
+      console.log(divValue);
+      this.updateSelectedBooking(divValue);
+    };
+  }
+
+  fillTimeSlots() {
+    const bookedTables = [];
+    for (const booking of this.state.todaysBookings) {
+      const timeStart = booking.time;
+      const timeWithoutDashes = timeStart.replace(":", "");
+      const timeStartToInteger = parseInt(timeWithoutDashes);
+      const timeStartAdjusted = (timeStartToInteger - 1200) / 25 + 9;
+
+      const tableName = booking.diningTable.tableName;
+      const tableJustTheNumber = tableName.replace("Table", "");
+      const tableNumber = parseInt(tableJustTheNumber);
+      const tableNumberAdjusted = tableNumber + 2;
+      const customerName = booking.customer.name;
+
+      const divValue = {
+        tableId: tableJustTheNumber,
+        time: timeStart
+      };
+
+      const booked = {
+        gridColumn: " span 8 /" + timeStartAdjusted,
+        gridRow: "span 1 /" + tableNumberAdjusted,
+        backgroundColor: "#4cd4a0",
+        hover: {
+          backgroundColor: "#333"
+        }
+      };
+
+      const handleBookingClick = this.createHandleBookingClick(divValue);
+
+      bookedTables.push(
+        <button style={booked} onClick={handleBookingClick}>
+          {customerName}
+        </button>
+      );
+    }
+    return bookedTables;
+  }
+
   componentDidMount() {
     this.fetchDetails(this.state.urls[0].customersURL, "customers");
     this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables");
-    this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+    this.fetchDetails(this.state.urls[1].bookingsURL, "bookings", () => {
+      this.updateSelectedDate(new Date().getDate());
+    });
+    this.fillTimeSlots();
   }
 
   render() {
@@ -129,6 +253,7 @@ class Main extends Component {
                 return (
                   <FloorPlan
                     updateSelectedTable={this.updateSelectedTable}
+                    selectedPartySize={this.state.selectedPartySize}
                     state={this.state}
                   />
                 );
@@ -138,7 +263,13 @@ class Main extends Component {
               path="/booking-forecast"
               render={() => {
                 return (
-                  <BookingForecast diningTables={this.state.diningTables} />
+                  <BookingForecast
+                    selectedDate={this.state.selectedDate}
+                    diningTables={this.state.diningTables}
+                    bookings={this.state.todaysBookings}
+                    fillTimeSlots={this.fillTimeSlots}
+                    updateSelectedBooking={this.updateSelectedBooking}
+                  />
                 );
               }}
             />
@@ -147,14 +278,16 @@ class Main extends Component {
           <Header />
           <h2>selected table: {this.state.selectedTable}</h2>
           <NavBar
+            updateState={this.state.updateState}
+            selectedBooking={this.state.selectedBooking}
             makeBooking={this.makeBooking}
+            deleteBooking={this.deleteBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate}
             tables={this.state.diningTables}
+            selectedTable={this.state.selectedTable}
+            updatePartySize={this.updatePartySize}
           />
-
-          {/* <FloorPlan state={this.state} />
-          <BookingForecast diningTables={this.state.diningTables} /> */}
         </Fragment>
       </Router>
     );
@@ -162,5 +295,3 @@ class Main extends Component {
 }
 
 export default Main;
-
-// <BookingForecast tables={this.state.diningTables} />
