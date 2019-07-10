@@ -138,9 +138,8 @@ class Main extends Component {
   }
 
   deleteBooking() {
-    const deleteURL = `http://localhost:8080/bookings/${
-      this.state.selectedBooking
-    }`;
+    const bookingId = this.state.selectedBooking['_links'].self.href
+    const deleteURL = bookingId
     fetch(deleteURL, {
       method: "DELETE"
     }).then(res => {

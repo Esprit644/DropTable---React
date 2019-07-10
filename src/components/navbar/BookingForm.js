@@ -53,6 +53,17 @@ const BookingForm = (props) => {
         event.target.reset();
     }
 
+    function handleUpdateClick(event) {
+      props.updateBooking(makeBookingObject());
+      setCustomerName('');
+      setPhone('');
+      setSize(0);
+      setTable(1);
+      setDate('');
+      setTime('');
+      event.target.reset();
+    }
+
     function populateFormOnBookingSelect() {
       if (props.updateState) {
         setCustomerName(props.selectedBooking.customer.name);
@@ -152,6 +163,7 @@ const BookingForm = (props) => {
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
                     <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} value={foundName} ></input>
+                    <button className="delete-button">Delete</button>
                     <div className={`name-search-narrower + ${visible}` } >{searchOptions}</div>
                 </div>
                 <div className="form-item">
@@ -176,7 +188,7 @@ const BookingForm = (props) => {
                 </div>
                     <input type="submit" value="Create Booking" className="form-submit-button"></input>
                     <button value="Delete Booking" onClick={handleDeleteClick} className="form-delete-button">Delete Button</button>
-
+                    <button value="Update Booking" onClick={handleUpdateClick} className="form-update-button">Update Button</button>
                 </div>
 
         </form>

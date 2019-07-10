@@ -59,6 +59,16 @@
     background-color: #cf6b7e;
 }
 
+.form-update-button {
+  text-align: center;
+  margin-top: 10px;
+  width: 18vw;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #50b6bb;
+  color: #fff;
+}
+
 
 .form-submit-button:focus {
     outline: none;
