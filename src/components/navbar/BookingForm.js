@@ -104,6 +104,10 @@ const BookingForm = (props) => {
         setTime(event.target.value)
     }
 
+    function handleDeleteClick() {
+      props.deleteBooking()
+    }
+
     useEffect(() => {
       setDisplayTableValue(table)
     }, [table])
@@ -145,7 +149,7 @@ const BookingForm = (props) => {
                     <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
                 </div>
                     <input type="submit" value="Create Booking" className="form-submit-button"></input>
-
+                    <button value="Delete Booking" onClick={handleDeleteClick} className="form-delete-button">Delete Button</button>
 
                 </div>
 
