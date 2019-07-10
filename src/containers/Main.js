@@ -32,6 +32,7 @@ class Main extends Component {
     this.fetchDetails = this.fetchDetails.bind(this);
     this.updateSelectedDate = this.updateSelectedDate.bind(this);
     this.updateSelectedTable = this.updateSelectedTable.bind(this);
+    this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
   }
 
   makeBooking(booking) {
@@ -112,6 +113,10 @@ class Main extends Component {
     })
   }
 
+  updateSelectedBooking(bookingId) {
+    console.log(bookingId)
+    this.setState({selectedBooking: bookingId})
+  }
 
   updateSelectedTable(newTable) {
     this.setState({ selectedTable: newTable });
@@ -164,6 +169,7 @@ class Main extends Component {
                     selectedDate={this.state.selectedDate}
                     diningTables={this.state.diningTables}
                     bookings={this.state.todaysBookings}
+                    updateSelectedBooking={this.updateSelectedBooking}
                   />
                 );
               }}
