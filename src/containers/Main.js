@@ -36,6 +36,7 @@ class Main extends Component {
     this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
     this.fillTimeSlots = this.fillTimeSlots.bind(this);
     this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
+    this.updateCustomer = this.updateCustomer.bind(this);
   }
 
 
@@ -72,7 +73,6 @@ class Main extends Component {
   }
 
   postBooking(booking, customer) {
-
     const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`;
     const bookDetails = {
       date: booking.date,
@@ -141,6 +141,25 @@ class Main extends Component {
       })
   }
 
+  updateCustomer(customerObject) {
+    const url = customerObject.href;
+    const customerData = {name: customerObject.name, phoneNumber: customerObject.phone_number}
+    fetch(url, {
+      method: 'PUT', 
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(customerData)
+    })
+    .then(res => {
+      if (res.ok) {
+        this.fetchDetails(this.state.urls[0].customersURL, "customers")
+      }
+    })
+      
+  }
+
   updateSelectedBooking(bookingInfo) {
     this.setState({updateState: true})
     console.log(bookingInfo.time)
@@ -150,8 +169,6 @@ class Main extends Component {
       }
     }
   }
-
-
 
   updateSelectedTable(newTable) {
     this.setState({ selectedTable: newTable });
@@ -269,6 +286,7 @@ class Main extends Component {
             tables={this.state.diningTables}
             selectedTable={this.state.selectedTable}
             updatePartySize={this.updatePartySize}
+            updateCustomer={this.updateCustomer}
           />
         </Fragment>
       </Router>
