@@ -1,0 +1,42 @@
+#header-container {
+  top: 0;
+  height: 10%;
+  width: 100%;
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.title-container {
+  right: 0;
+  width: 100%;
+}
+
+.button-container {
+  left: 0;
+  width: 100%;
+}
+
+.toggles {
+  list-style: none;
+  display: inline-flex;
+
+  text-decoration: none;
+
+  border: 1px black solid;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 10px;
+  background: white;
+  /* margin: 10px; */
+  height: 30px;
+  width: 50px;
+}
+
+h1 {
+  background: cornsilk;
+
+  top: 0;
+  text-align: center;
+  font-style: italic;
+}

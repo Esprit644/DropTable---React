@@ -1,7 +1,7 @@
-.table{
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
+.table {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
 }
 
 .table-busy {
@@ -12,15 +12,14 @@
 }
 
 .floorplan-container {
-    height: 90vh;
-    width: 70vw;
-    float: left;
+  height: 90vh;
+  width: 70vw;
+  float: left;
 }
 
-.floorplan{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-    height: 90vh;
-
+.floorplan {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 90vh;
 }
