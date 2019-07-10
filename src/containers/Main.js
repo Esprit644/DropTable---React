@@ -37,6 +37,7 @@ class Main extends Component {
     this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
     this.fillTimeSlots = this.fillTimeSlots.bind(this);
     this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
+    this.updateBooking = this.updateBooking.bind(this);
   }
 
   makeBooking(booking) {
@@ -79,7 +80,8 @@ class Main extends Component {
       time: booking.time,
       partySize: booking.size,
       customer: customer,
-      diningTable: tableURL
+      diningTable: tableURL,
+      customerHref: customer
     };
     console.log("bookDetails", bookDetails);
     fetch(this.state.urls[1].bookingsURL, {
@@ -117,6 +119,25 @@ class Main extends Component {
         this.setState(prevState => {
           return {
             [`${stateKey}`]: prevState[`${stateKey}`].concat(returnData)
+          };
+        })
+      );
+  }
+
+  updateBooking(body) {
+    fetch(this.state.selectedBooking.customerHref, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(returnData =>
+        this.setState(prevState => {
+          return {
+            bookings: prevState.bookings.concat(returnData)
           };
         })
       );
@@ -271,6 +292,7 @@ class Main extends Component {
           </Switch>
           <Header />
           <NavBar
+          updateBooking={this.updateBooking}
             updateSelectedTable={this.updateSelectedTable}
             updateState={this.state.updateState}
             selectedBooking={this.state.selectedBooking}

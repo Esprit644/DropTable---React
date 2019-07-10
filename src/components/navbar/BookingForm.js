@@ -42,7 +42,7 @@ const BookingForm = (props) => {
     }, [selectedCustomer])
 
     function handleSubmit(event) {
-
+      if(!props.updateState){
         props.makeBooking(makeBookingObject());
         setCustomerName('');
         setPhone('');
@@ -51,17 +51,16 @@ const BookingForm = (props) => {
         setDate('');
         setTime('');
         event.target.reset();
-    }
-
-    function handleUpdateClick(event) {
-      props.updateBooking(makeBookingObject());
-      setCustomerName('');
-      setPhone('');
-      setSize(0);
-      setTable(1);
-      setDate('');
-      setTime('');
-      event.target.reset();
+      } else {
+        props.updateBooking(makeBookingObject());
+        setCustomerName('');
+        setPhone('');
+        setSize(0);
+        setTable(1);
+        setDate('');
+        setTime('');
+        event.target.reset();
+      }
     }
 
     function populateFormOnBookingSelect() {
@@ -189,7 +188,7 @@ const BookingForm = (props) => {
                 </div>
                     <input type="submit" value="Create Booking" className="form-submit-button"></input>
                     <button value="Delete Booking" onClick={handleDeleteClick} className="form-delete-button">Delete Button</button>
-                    <button value="Update Booking" onClick={handleUpdateClick} className="form-update-button">Update Button</button>
+                    <input type="submit" className="form-update-button" value="Update Booking"></input>
                 </div>
 
         </form>
