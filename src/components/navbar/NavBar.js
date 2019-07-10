@@ -20,6 +20,7 @@ const NavBar = (props) => {
             <div className="booking-form-container">
                 <BookingForm
                   makeBooking={props.makeBooking}
+                  deleteBooking={props.deleteBooking}
                   customers={props.customers}
                   updatePartySize={props.updatePartySize}
                   numOfTables={props.tables.length}

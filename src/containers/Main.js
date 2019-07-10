@@ -14,6 +14,7 @@ class Main extends Component {
       selectedPartySize: 0,
       selectedDate: "",
       diningTables: [],
+      selectedBooking: 3,
       customers: [],
       bookings: [],
       todaysBookings: [],
@@ -26,6 +27,7 @@ class Main extends Component {
     };
     this.updatePartySize = this.updatePartySize.bind(this);
     this.makeBooking = this.makeBooking.bind(this);
+    this.deleteBooking = this.deleteBooking.bind(this);
     this.postDetails = this.postDetails.bind(this);
     this.fetchDetails = this.fetchDetails.bind(this);
     this.updateSelectedDate = this.updateSelectedDate.bind(this);
@@ -98,6 +100,19 @@ class Main extends Component {
       );
   }
 
+  deleteBooking() {
+    const deleteURL = `http://localhost:8080/bookings/${this.state.selectedBooking}`
+    fetch(deleteURL, {
+      method: 'DELETE'
+    })
+    .then(res => {
+      if(res.ok) {
+        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
+      }
+    })
+  }
+
+
   updateSelectedTable(newTable) {
     this.setState({ selectedTable: newTable });
   }
@@ -157,6 +172,7 @@ class Main extends Component {
           </Switch>
           <NavBar
             makeBooking={this.makeBooking}
+            deleteBooking={this.deleteBooking}
             customers={this.state.customers}
             updateSelectedDate={this.updateSelectedDate}
             tables={this.state.diningTables}
@@ -170,3 +186,5 @@ class Main extends Component {
 }
 
 export default Main;
+
+// <h2>selected table: {this.state.selectedTable}</h2>
