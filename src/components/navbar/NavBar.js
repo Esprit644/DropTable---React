@@ -19,6 +19,7 @@ const NavBar = (props) => {
             </div>
             <div className="booking-form-container">
                 <BookingForm
+                  updateSelectedTable={props.updateSelectedTable}
                   updateState={props.updateState}
                   selectedBooking={props.selectedBooking}
                   makeBooking={props.makeBooking}

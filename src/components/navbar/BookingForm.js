@@ -119,6 +119,7 @@ const BookingForm = (props) => {
 
     function handleTableChange(event) {
       setTable(event.target.value)
+      props.updateSelectedTable(event.target.value)
     }
 
     function handleDateChange(event) {

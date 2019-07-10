@@ -261,6 +261,7 @@ class Main extends Component {
             <Route component={ErrorPage} />
           </Switch>
           <NavBar
+            updateSelectedTable={this.updateSelectedTable}
             updateState={this.state.updateState}
             selectedBooking={this.state.selectedBooking}
             makeBooking={this.makeBooking}
