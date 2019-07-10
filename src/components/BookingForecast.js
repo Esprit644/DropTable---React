@@ -5,11 +5,9 @@ const BookingForecast = (props) => {
 
     const [tables, setTable] = useState([])
 
-    const date = '12-07-2019'
-
     useEffect(() => {
         setTable(props.diningTables)
-    })
+    }, [props.diningTables])
     let tableIndexNumbers = [];
     let tableNumbers = [];
     for (let index = 0; index < tables.length; index++) {
