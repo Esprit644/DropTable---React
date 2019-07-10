@@ -3,7 +3,7 @@ import "./BookingForecast.css";
 
 const BookingForecast = props => {
   const [tables, setTable] = useState([]);
-  console.log("these are the props son", props);
+
 
   useEffect(() => {
     setTable(props.diningTables);

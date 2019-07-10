@@ -36,48 +36,72 @@ class Main extends Component {
     this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
   }
 
+
+
+
   makeBooking(booking) {
+
+    let bookingCustomerURL = '';
+
     const custDetails = {
       name: booking.name,
       phoneNumber: booking.phone_number
     };
+
+
     if (booking.href == "") {
-      this.postDetails(
-        this.state.urls[0].customersURL,
-        custDetails,
-        "customers"
-      );
-
-      const bookingCustomer = [];
-
-      this.state.customers.forEach(customer => {
-        if (customer.name === booking.name) {
-          bookingCustomer.push(customer);
-        }
-      });
-      console.log(booking);
-
-      const customerURL = bookingCustomer[0]["_links"].self.href;
-      const tableURL = `http://localhost:8080/diningTables/${
-        this.state.selectedTable
-      }`;
-      const bookDetails = {
-        date: booking.date,
-        time: booking.time,
-        partySize: booking.size,
-        customer: customerURL,
-        diningTable: tableURL
-      };
-
-      this.postDetails(this.state.urls[1].bookingsURL, bookDetails, "bookings");
+      fetch(this.state.urls[0].customersURL, {
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(custDetails)
+      })
+        .then(res => res.json())
+        .then(newCustomer => this.setState((prevState) => {
+          bookingCustomerURL = newCustomer['_links'].self.href
+          return { customers: prevState.customers.concat(newCustomer) }
+        }, () => {
+          this.postBooking(booking, newCustomer._links.self.href);
+        }))
+    } else {
+      this.postBooking(booking, booking.href)
     }
+  }
+
+  postBooking(booking, customer) {
+
+    const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`;
+    const bookDetails = {
+      date: booking.date,
+      time: booking.time,
+      partySize: booking.size,
+      customer: customer,
+      diningTable: tableURL
+    };
+    console.log("bookDetails", bookDetails)
+    fetch(this.state.urls[1].bookingsURL, {
+      method: 'POST',
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bookDetails)
+    })
+      .then(res => res.json())
+      .then(newBooking => this.setState((prevState) => {
+        return { bookings: prevState.bookings.concat(newBooking) }
+      }, () => {
+        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+      }))
   }
 
   postDetails(url, body, stateKey) {
     fetch(url, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
@@ -107,11 +131,11 @@ class Main extends Component {
     fetch(deleteURL, {
       method: 'DELETE'
     })
-    .then(res => {
-      if(res.ok) {
-        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
-      }
-    })
+      .then(res => {
+        if (res.ok) {
+          this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
+        }
+      })
   }
 
   updateSelectedBooking(bookingInfo) {
