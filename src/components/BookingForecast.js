@@ -45,32 +45,34 @@ const BookingForecast = props => {
     }
   ];
 
-  function fillTimeSlots(props) {
-    const bookedTables = [];
-    for (const booking of props.bookings) {
-      const timeStart = booking.time;
-      const timeWithoutDashes = timeStart.replace(":", "");
-      const timeStartToInteger = parseInt(timeWithoutDashes);
-      const timeStartAdjusted = (timeStartToInteger - 1200) / 25 + 9;
 
-      const tableName = booking.diningTable.tableName;
-      const tableJustTheNumber = tableName.replace("Table", "");
-      const tableNumber = parseInt(tableJustTheNumber);
-      const tableNumberAdjusted = tableNumber + 2;
 
-      const booked = {
-        gridColumn: " span 8 /" + timeStartAdjusted,
-        gridRow: "span 1 /" + tableNumberAdjusted,
-        backgroundColor: "#4cd4a0",
-        hover: {
-          backgroundColor: "#333"
-        }
-      };
+//   function fillTimeSlots(props) {
+//     const bookedTables = [];
+//     for (const booking of props.bookings) {
+//       const timeStart = booking.time;
+//       const timeWithoutDashes = timeStart.replace(":", "");
+//       const timeStartToInteger = parseInt(timeWithoutDashes);
+//       const timeStartAdjusted = (timeStartToInteger - 1200) / 25 + 9;
 
-      bookedTables.push(<div style={booked} />);
-    }
-    return bookedTables;
-  }
+//       const tableName = booking.diningTable.tableName;
+//       const tableJustTheNumber = tableName.replace("Table", "");
+//       const tableNumber = parseInt(tableJustTheNumber);
+//       const tableNumberAdjusted = tableNumber + 2;
+
+//       const booked = {
+//         gridColumn: " span 8 /" + timeStartAdjusted,
+//         gridRow: "span 1 /" + tableNumberAdjusted,
+//         backgroundColor: "#4cd4a0",
+//         hover: {
+//           backgroundColor: "#333"
+//         }
+//       };
+
+//       bookedTables.push(<div style={booked} />);
+//     }
+//     return bookedTables;
+//   }
 
   const displayTimes = times.map((time, index) => {
     return (
@@ -92,7 +94,7 @@ const BookingForecast = props => {
         <div className="tableNames">{tableNumbers}</div>
         <div className="forecast" style={forecast}>
           {displayTimes}
-          {fillTimeSlots(props)}
+          {props.fillTimeSlots(props)}
         </div>
       </div>
     </Fragment>

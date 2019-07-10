@@ -40,7 +40,7 @@ const BookingForm = (props) => {
     }, [selectedCustomer])
 
     function handleSubmit(event) {
-        event.preventDefault()
+
         props.makeBooking(makeBookingObject());
         setCustomerName('');
         setPhone('');
