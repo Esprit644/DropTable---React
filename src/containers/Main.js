@@ -114,10 +114,11 @@ class Main extends Component {
     })
   }
 
-  updateSelectedBooking(bookingId) {
+  updateSelectedBooking(bookingInfo) {
     this.setState({updateState: true})
+    console.log(bookingInfo.time)
     for (const booking of this.state.todaysBookings) {
-      if (booking.diningTable.tableName === `Table${bookingId}`) {
+      if (booking.diningTable.tableName === `Table${bookingInfo.tableId}` && booking.time === bookingInfo.time) {
         this.setState({selectedBooking: booking})
       }
     }
