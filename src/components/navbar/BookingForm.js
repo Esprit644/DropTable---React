@@ -17,6 +17,7 @@ const BookingForm = (props) => {
     const [displayTableValue, setDisplayTableValue] = useState(0)
 
     useEffect(() => {
+      if(!props.updateState){
         if(!customerName) {
             setfilteredCustomers([])
             return
@@ -24,6 +25,7 @@ const BookingForm = (props) => {
         fetch(`http://localhost:8080/customers/partialname/${customerName}`)
         .then(res => res.json())
         .then(data => setfilteredCustomers(data))
+      }
     },[customerName])
 
     useEffect(() => {
@@ -117,6 +119,14 @@ const BookingForm = (props) => {
       setTable(props.selectedTable)
     }, [props.selectedTable])
 
+    useEffect(() => {
+      setCustomerName(props.selectedBooking);
+      // setPhone(props.selectedBooking.customer.phoneNumber);
+      // setSize(props.selectedBooking.partySize);
+      // setTable(props.selectedBooking.diningTable.tableName[-1]);
+      // setDate(props.selectedBooking.date);
+      // setTime(props.selectedBooking.time);
+    }, [props.selectedBooking])
 
 
     return (
@@ -134,7 +144,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="size">Party Size: </label>
-                    <input type="number" min="1" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+                    <input type="number" min="1" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} value=''></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="table-number">Table Number: </label>

@@ -9,12 +9,13 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      updateState: false,
       availableTables: [],
       selectedTable: 1,
       selectedPartySize: 0,
       selectedDate: "",
       diningTables: [],
-      selectedBooking: 3,
+      selectedBooking: {},
       customers: [],
       bookings: [],
       todaysBookings: [],
@@ -114,9 +115,15 @@ class Main extends Component {
   }
 
   updateSelectedBooking(bookingId) {
-    console.log(bookingId)
-    this.setState({selectedBooking: bookingId})
+    this.setState({updateState: true})
+    for (const booking of this.state.todaysBookings) {
+      if (booking.diningTable.tableName === `Table${bookingId}`) {
+        this.setState({selectedBooking: booking})
+      }
+    }
   }
+
+
 
   updateSelectedTable(newTable) {
     this.setState({ selectedTable: newTable });
@@ -177,6 +184,8 @@ class Main extends Component {
             <Route component={ErrorPage} />
           </Switch>
           <NavBar
+            updateState={this.state.updateState}
+            selectedBooking={this.state.selectedBooking}
             makeBooking={this.makeBooking}
             deleteBooking={this.deleteBooking}
             customers={this.state.customers}
