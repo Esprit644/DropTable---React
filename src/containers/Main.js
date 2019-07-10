@@ -51,7 +51,7 @@ class Main extends Component {
     if (booking.href == "") {
       fetch(this.state.urls[0].customersURL, {
         method: 'POST',
-        headers:{
+        headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
@@ -60,7 +60,7 @@ class Main extends Component {
         .then(res => res.json())
         .then(newCustomer => this.setState((prevState) => {
           bookingCustomerURL = newCustomer['_links'].self.href
-          return {customers: prevState.customers.concat(newCustomer)}
+          return { customers: prevState.customers.concat(newCustomer) }
         }, () => {
           this.postBooking(booking, newCustomer._links.self.href);
         }))
@@ -69,8 +69,8 @@ class Main extends Component {
     }
   }
 
-  postBooking(booking, customer){
-    
+  postBooking(booking, customer) {
+
     const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`;
     const bookDetails = {
       date: booking.date,
@@ -81,8 +81,8 @@ class Main extends Component {
     };
     console.log("bookDetails", bookDetails)
     fetch(this.state.urls[1].bookingsURL, {
-      method: 'POST', 
-      headers:{
+      method: 'POST',
+      headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
@@ -90,9 +90,11 @@ class Main extends Component {
     })
       .then(res => res.json())
       .then(newBooking => this.setState((prevState) => {
-        return {bookings: prevState.bookings.concat(newBooking)}
+        return { bookings: prevState.bookings.concat(newBooking) }
+      }, () => {
+        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
       }))
-    }
+  }
 
   postDetails(url, body, stateKey) {
     fetch(url, {
