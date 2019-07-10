@@ -1,14 +1,16 @@
 .forecast{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 90%;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(44, 1fr);
+    background-color: #fff;
+    grid-gap: 3px;
 }
 
 .time{
     grid-column: span 4;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .tableNames{
@@ -16,9 +18,10 @@
     width: 10%;
     display: grid;
     grid-template-rows: 20px repeat(auto-fill, 1fr);
-    border: 1px solid black;
+    /* border: 1px solid black; */
     float: left;
     margin-top: 3vh;
+    background-color: #f4f4f4;
 }
 
 .blank{
@@ -27,7 +30,7 @@
 }
 
 .tableName{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin: 0;
 }
 

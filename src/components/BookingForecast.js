@@ -62,6 +62,7 @@ const BookingForecast = props => {
         gridColumn: " span 8 /" + timeStartAdjusted,
         gridRow: "span 1 /" + tableNumberAdjusted,
         backgroundColor: "#4cd4a0",
+        borderRadius:'5px',
         hover: {
           backgroundColor: "#333"
         }
