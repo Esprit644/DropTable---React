@@ -12,7 +12,8 @@ class Calendar extends Component {
       currentDate: new Date().getDate(),
       currentMonth: new Date().getMonth() + 1,
       numOfDaysInMonth: 0,
-      selectedDate: ''
+      selectedDate: '',
+      firstDay : 0
     }
     this.handleDaySelected = this.handleDaySelected.bind(this)
     this.onMonthSelected = this.onMonthSelected.bind(this)
@@ -28,6 +29,11 @@ class Calendar extends Component {
     this.setState({currentMonth: new Date().getMonth()})
   }
 
+  setFirstDayOfMonth(month) {
+    const firstDay = (new Date(2019, month)).getDay()
+    this.setState({firstDay: firstDay})
+  }
+
   setNumOfDaysInMonth(monthNum) {
     const numDays = 32 - new Date(2019, monthNum, 32).getDate();
     this.setState({numOfDaysInMonth: numDays})
@@ -38,7 +44,6 @@ class Calendar extends Component {
     const newMonth = this.handleSingleFigureNum(month)
     const newDate = `2019-${newMonth}-${newDay}`
     this.props.updateSelectedDate(newDate)
-    // this.setState({selectedDate: newDate})
   }
 
   handleSingleFigureNum(num) {
@@ -53,7 +58,11 @@ class Calendar extends Component {
   render() {
     return (
       <Fragment>
-      <MonthSelect onMonthSelected={this.onMonthSelected} setNumOfDaysInMonth={this.setNumOfDaysInMonth} currentMonth={this.state.currentMonth}/>
+      <MonthSelect
+        firstDay={this.state.firstDay}
+        onMonthSelected={this.onMonthSelected}
+        setNumOfDaysInMonth={this.setNumOfDaysInMonth}
+        currentMonth={this.state.currentMonth}/>
       <div className='calendar'>
       <p>Mon</p>
       <p>Tue</p>
@@ -63,7 +72,11 @@ class Calendar extends Component {
       <p>Sat</p>
       <p>Sun</p>
 
-      <Days  numOfDays={this.state.numOfDaysInMonth} currentMonth={this.state.currentMonth} currentDate={this.state.currentDate} onDaySelected={this.handleDaySelected}/>
+      <Days
+        numOfDays={this.state.numOfDaysInMonth}
+        currentMonth={this.state.currentMonth}
+        currentDate={this.state.currentDate}
+        onDaySelected={this.handleDaySelected}/>
       </div>
 
       </Fragment>

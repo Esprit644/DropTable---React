@@ -6,8 +6,14 @@ const Days = (props) => {
   const numOfDays = props.numOfDays + 1
   let days = []
 
-
+  // const firstDayStartStyle = {
+  //   gridColumnStart: {this.props.firstDay}
+  // }
   for (let date=1; date<numOfDays; date++){
+    // if (date === 1) {
+    //   <button className='day' style= value={date} key={date} onClick={handleClick}>{date}</button>
+    //
+    // }
     if (date === props.currentDate && new Date().getMonth()+1 == props.currentMonth) {
       days.push(
         <button className='today' value={date} key={date} onClick={handleClick}>{date}</button>
