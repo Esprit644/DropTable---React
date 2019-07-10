@@ -41,8 +41,6 @@ class Main extends Component {
   }
 
   makeBooking(booking) {
-    let bookingCustomerURL = "";
-
     const custDetails = {
       name: booking.name,
       phoneNumber: booking.phone_number
@@ -61,7 +59,6 @@ class Main extends Component {
         .then(newCustomer =>
           this.setState(
             prevState => {
-              bookingCustomerURL = newCustomer["_links"].self.href;
               return { customers: prevState.customers.concat(newCustomer) };
             },
             () => {
