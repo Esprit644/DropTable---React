@@ -6,24 +6,25 @@ const BookingForm = (props) => {
     const [customerName, setCustomerName] = useState('');
     const [phone, setPhone] = useState('');
     const [size, setSize] = useState(0);
-    const [table, setTable] = useState(1);
+    const [table, setTable] = useState(0);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [filteredCustomers, setfilteredCustomers] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState('');
     const [foundName, setFoundName] = useState('');
-    const [foundNumber, setFoundNumber] = useState('');
     const [visible, setVisible] = useState('');
+    const [href, setHref] = useState('');
+    const [displayTableValue, setDisplayTableValue] = useState(0)
 
-    // useEffect(() => {
-    //     if(!customerName) {
-    //         setfilteredCustomers([])
-    //         return
-    //     }
-    //     fetch(`http://localhost:8080/customers/partialname/${customerName}`)
-    //     .then(res => res.json())
-    //     .then(data => setfilteredCustomers(data))
-    // },[customerName])
+    useEffect(() => {
+        if(!customerName) {
+            setfilteredCustomers([])
+            return
+        }
+        fetch(`http://localhost:8080/customers/partialname/${customerName}`)
+        .then(res => res.json())
+        .then(data => setfilteredCustomers(data))
+    },[customerName])
 
     useEffect(() => {
         setFoundName(selectedCustomer)
@@ -32,7 +33,8 @@ const BookingForm = (props) => {
     useEffect(() => {
         props.customers.forEach(customer => {
             if(customer.name === selectedCustomer){
-                setFoundNumber(customer.phoneNumber)
+                setPhone(customer.phoneNumber)
+                setHref(customer['_links'].self.href)
             }
         })
     }, [selectedCustomer])
@@ -49,11 +51,6 @@ const BookingForm = (props) => {
         event.target.reset();
     }
 
-    function handlePartySize() {
-      const availableTables = []
-
-    }
-
     function convertSlashToHyphen(date) {
       return date.replace('/', '-')
     }
@@ -61,11 +58,12 @@ const BookingForm = (props) => {
     function makeBookingObject() {
       const newDate = convertSlashToHyphen(date)
         const bookingDetails = {
-            name: customerName,
+            name: foundName,
             phone_number: phone,
             size: size,
             date: newDate,
-            time: time
+            time: time,
+            href: href,
         }
         return bookingDetails;
     }
@@ -73,7 +71,6 @@ const BookingForm = (props) => {
     const searchOptions = filteredCustomers.map((customer, index) => {
         return <p key={index} onClick={handleSelectedCustomer}>{customer.name}</p>
     })
-
 
     function handleSelectedCustomer(event){
         setSelectedCustomer(event.target.innerHTML)
@@ -107,6 +104,14 @@ const BookingForm = (props) => {
         setTime(event.target.value)
     }
 
+    useEffect(() => {
+      setDisplayTableValue(table)
+    }, [table])
+
+    useEffect(() => {
+      setDisplayTableValue(props.selectedTable)
+      setTable(props.selectedTable)
+    }, [props.selectedTable])
 
 
 
@@ -121,7 +126,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="phone">Phone Number: </label>
-                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange}  ></input>
+                    <input type="text" required className="phone_number" name="phone" placeholder="Phone Number" onChange={handlePhoneChange} value={phone} ></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="size">Party Size: </label>
@@ -129,7 +134,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="table-number">Table Number: </label>
-                    <input type="number" min="1" max={props.numOfTables} required className="table_number" name="table" onChange={handleTableChange}></input>
+                    <input type="number" min="1" max={props.numOfTables} required className="table_number" name="table" value={displayTableValue} onChange={handleTableChange}></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="date">Date: </label>

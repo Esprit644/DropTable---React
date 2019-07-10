@@ -22,7 +22,8 @@ const NavBar = (props) => {
                   makeBooking={props.makeBooking}
                   customers={props.customers}
                   updatePartySize={props.updatePartySize}
-                  numOfTables={props.tables.length}/>
+                  numOfTables={props.tables.length}
+                  selectedTable={props.selectedTable}/>
             </div>
         </nav>
 

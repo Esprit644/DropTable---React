@@ -3,10 +3,12 @@ import "./BookingForecast.css";
 
 const BookingForecast = props => {
   const [tables, setTable] = useState([]);
+  console.log("these are the props son", props);
 
   useEffect(() => {
     setTable(props.diningTables);
-  });
+  }, [props.diningTables]);
+  let tableIndexNumbers = [];
   let tableNumbers = [];
   for (let index = 0; index < tables.length; index++) {
     tableNumbers.push(
@@ -14,6 +16,7 @@ const BookingForecast = props => {
         {index + 1}
       </p>
     );
+    tableIndexNumbers.push(index + 1);
   }
 
   let times = [];
@@ -42,15 +45,17 @@ const BookingForecast = props => {
     }
   ];
 
-  function fillTimeSlots(arrayOfBookings) {
+  function fillTimeSlots(props) {
     const bookedTables = [];
-    for (const booking of arrayOfBookings) {
+    for (const booking of props.bookings) {
       const timeStart = booking.time;
       const timeWithoutDashes = timeStart.replace(":", "");
       const timeStartToInteger = parseInt(timeWithoutDashes);
       const timeStartAdjusted = (timeStartToInteger - 1200) / 25 + 9;
 
-      const tableNumber = booking.diningTable.id;
+      const tableName = booking.diningTable.tableName;
+      const tableJustTheNumber = tableName.replace("Table", "");
+      const tableNumber = parseInt(tableJustTheNumber);
       const tableNumberAdjusted = tableNumber + 2;
 
       const booked = {
@@ -87,7 +92,7 @@ const BookingForecast = props => {
         <div className="tableNames">{tableNumbers}</div>
         <div className="forecast" style={forecast}>
           {displayTimes}
-          {fillTimeSlots(testArray)}
+          {fillTimeSlots(props)}
         </div>
       </div>
     </Fragment>
