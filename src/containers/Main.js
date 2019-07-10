@@ -33,6 +33,7 @@ class Main extends Component {
   }
 
   makeBooking(booking) {
+
     const custDetails = {
       name: booking.name,
       phoneNumber: booking.phone_number
@@ -47,16 +48,16 @@ class Main extends Component {
       const bookingCustomer = [];
 
       this.state.customers.forEach(customer => {
-        if (customer.name === booking.name) {
+
+        if (customer.name.toLowerCase() == booking.name.toLowerCase()) {
           bookingCustomer.push(customer);
         }
       });
       console.log(booking);
+      console.log(bookingCustomer)
 
       const customerURL = bookingCustomer[0]["_links"].self.href;
-      const tableURL = `http://localhost:8080/diningTables/${
-        this.state.selectedTable
-      }`;
+      const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`;
       const bookDetails = {
         date: booking.date,
         time: booking.time,
