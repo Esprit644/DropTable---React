@@ -152,6 +152,7 @@ const BookingForm = (props) => {
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
                     <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} value={foundName} ></input>
+                    <button className="delete-button">Delete</button>
                     <div className={`name-search-narrower + ${visible}` } >{searchOptions}</div>
                 </div>
                 <div className="form-item">
