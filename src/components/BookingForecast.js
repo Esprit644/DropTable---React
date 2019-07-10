@@ -45,6 +45,11 @@ const BookingForecast = props => {
     }
   ];
 
+  function handleBookingClick(event) {
+    console.log(event.target.value)
+    props.updateSelectedBooking(event.target.value)
+  }
+
   function fillTimeSlots(props) {
     const bookedTables = [];
     for (const booking of props.bookings) {
@@ -57,6 +62,7 @@ const BookingForecast = props => {
       const tableJustTheNumber = tableName.replace("Table", "");
       const tableNumber = parseInt(tableJustTheNumber);
       const tableNumberAdjusted = tableNumber + 2;
+      const customerName = booking.customer.name
 
       const booked = {
         gridColumn: " span 8 /" + timeStartAdjusted,
@@ -68,7 +74,7 @@ const BookingForecast = props => {
         }
       };
 
-      bookedTables.push(<div style={booked} />);
+      bookedTables.push(<button style={booked} value={tableJustTheNumber} onClick={handleBookingClick}>{customerName}</button>);
     }
     return bookedTables;
   }
