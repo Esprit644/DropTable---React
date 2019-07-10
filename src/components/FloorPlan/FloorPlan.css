@@ -1,32 +1,46 @@
 .table{
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  border: 1px solid #4cd4a0;
+  margin-left: 10%;
+  margin-top: 10%;
+  font-size: 1rem;
+}
+
+.table:hover {
+  background-color: rgb(211, 242, 255);
 }
 
 .table:focus {
-  background-color: #83D0F2;
-  color: white;
-  outline:0;
+background-color: #83D0F2;
+color: white;
+outline:0;
 }
 
 .table-busy {
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
-  background-color: red;
+width: 100px;
+height: 100px;
+margin-left: 10%;
+margin-top: 10%;
+border-radius: 5px;
+border: 1px solid red;
+background-color: red;
 }
 
 .floorplan-container {
-    height: 90vh;
-    width: 70vw;
-    float: left;
+  height: 90vh;
+  width: 70vw;
+  float: left;
+  position: absolute;
+  bottom: 0;
 }
 
 .floorplan{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-    height: 90vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 80vh;
+  margin-left: 10%;
 
 }

@@ -55,6 +55,10 @@
     color: #fff;
 }
 
+.form-delete-button:hover {
+    background-color: #cf6b7e;
+}
+
 .form-update-button {
   text-align: center;
   margin-top: 10px;

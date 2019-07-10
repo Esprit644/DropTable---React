@@ -2,8 +2,9 @@ import React, { Component, Fragment } from "react";
 import FloorPlan from "../components/FloorPlan/FloorPlan";
 import BookingForecast from "../components/BookingForecast";
 import NavBar from "../components/navbar/NavBar";
-import ErrorPage from "../components/ErrorPage";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import SwitchToggle from "../components/navbar/SwitchToggle";
+import Header from "../components/Header";
 
 class Main extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Main extends Component {
       availableTables: [],
       selectedTable: 1,
       selectedPartySize: 0,
-      selectedDate: '',
+      selectedDate: "",
       diningTables: [],
       selectedBooking: {},
       customers: [],
@@ -38,22 +39,15 @@ class Main extends Component {
     this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
   }
 
-
-
-
   makeBooking(booking) {
-
-
-
     const custDetails = {
       name: booking.name,
       phoneNumber: booking.phone_number
     };
 
-
     if (booking.href == "") {
       fetch(this.state.urls[0].customersURL, {
-        method: 'POST',
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
@@ -61,19 +55,25 @@ class Main extends Component {
         body: JSON.stringify(custDetails)
       })
         .then(res => res.json())
-        .then(newCustomer => this.setState((prevState) => {
-          return { customers: prevState.customers.concat(newCustomer) }
-        }, () => {
-          this.postBooking(booking, newCustomer._links.self.href);
-        }))
+        .then(newCustomer =>
+          this.setState(
+            prevState => {
+              return { customers: prevState.customers.concat(newCustomer) };
+            },
+            () => {
+              this.postBooking(booking, newCustomer._links.self.href);
+            }
+          )
+        );
     } else {
-      this.postBooking(booking, booking.href)
+      this.postBooking(booking, booking.href);
     }
   }
 
   postBooking(booking, customer) {
-
-    const tableURL = `http://localhost:8080/diningTables/${this.state.selectedTable}`;
+    const tableURL = `http://localhost:8080/diningTables/${
+      this.state.selectedTable
+    }`;
     const bookDetails = {
       date: booking.date,
       time: booking.time,
@@ -81,28 +81,33 @@ class Main extends Component {
       customer: customer,
       diningTable: tableURL
     };
-    console.log("bookDetails", bookDetails)
+    console.log("bookDetails", bookDetails);
     fetch(this.state.urls[1].bookingsURL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(bookDetails)
     })
       .then(res => res.json())
-      .then(newBooking => this.setState((prevState) => {
-        return { bookings: prevState.bookings.concat(newBooking) }
-      }, () => {
-        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
-      }))
+      .then(newBooking =>
+        this.setState(
+          prevState => {
+            return { bookings: prevState.bookings.concat(newBooking) };
+          },
+          () => {
+            this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+          }
+        )
+      );
   }
 
   postDetails(url, body, stateKey) {
     fetch(url, {
       method: "POST",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
@@ -121,11 +126,14 @@ class Main extends Component {
     fetch(url)
       .then(res => res.json())
       .then(customerData =>
-        this.setState({
-          [`${stateKey}`]: customerData._embedded[`${stateKey}`]
-        }, () => {
-          if (callback) callback()
-        })
+        this.setState(
+          {
+            [`${stateKey}`]: customerData._embedded[`${stateKey}`]
+          },
+          () => {
+            if (callback) callback();
+          }
+        )
       );
   }
 
@@ -133,26 +141,26 @@ class Main extends Component {
     const bookingId = this.state.selectedBooking['_links'].self.href
     const deleteURL = bookingId
     fetch(deleteURL, {
-      method: 'DELETE'
-    })
-      .then(res => {
-        if (res.ok) {
-          this.fetchDetails(this.state.urls[1].bookingsURL, "bookings")
-        }
-      })
+      method: "DELETE"
+    }).then(res => {
+      if (res.ok) {
+        this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+      }
+    });
   }
 
   updateSelectedBooking(bookingInfo) {
-    this.setState({updateState: true})
-    console.log(bookingInfo.time)
+    this.setState({ updateState: true });
+    console.log(bookingInfo.time);
     for (const booking of this.state.todaysBookings) {
-      if (booking.diningTable.tableName === `Table${bookingInfo.tableId}` && booking.time === bookingInfo.time) {
-        this.setState({selectedBooking: booking})
+      if (
+        booking.diningTable.tableName === `Table${bookingInfo.tableId}` &&
+        booking.time === bookingInfo.time
+      ) {
+        this.setState({ selectedBooking: booking });
       }
     }
   }
-
-
 
   updateSelectedTable(newTable) {
     this.setState({ selectedTable: newTable });
@@ -176,9 +184,9 @@ class Main extends Component {
 
   createHandleBookingClick(divValue) {
     return () => {
-      console.log(divValue)
-      this.updateSelectedBooking(divValue)
-    }
+      console.log(divValue);
+      this.updateSelectedBooking(divValue);
+    };
   }
 
   fillTimeSlots() {
@@ -193,13 +201,12 @@ class Main extends Component {
       const tableJustTheNumber = tableName.replace("Table", "");
       const tableNumber = parseInt(tableJustTheNumber);
       const tableNumberAdjusted = tableNumber + 2;
-      const customerName = booking.customer.name
-
+      const customerName = booking.customer.name;
 
       const divValue = {
         tableId: tableJustTheNumber,
         time: timeStart
-      }
+      };
 
       const booked = {
         gridColumn: " span 8 /" + timeStartAdjusted,
@@ -212,7 +219,11 @@ class Main extends Component {
 
       const handleBookingClick = this.createHandleBookingClick(divValue);
 
-      bookedTables.push(<button style={booked} onClick={handleBookingClick}>{customerName}</button>);
+      bookedTables.push(
+        <button style={booked} onClick={handleBookingClick}>
+          {customerName}
+        </button>
+      );
     }
     return bookedTables;
   }
@@ -221,10 +232,9 @@ class Main extends Component {
     this.fetchDetails(this.state.urls[0].customersURL, "customers");
     this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables");
     this.fetchDetails(this.state.urls[1].bookingsURL, "bookings", () => {
-      this.updateSelectedDate(new Date().getDate())
+      this.updateSelectedDate(new Date().getDate());
     });
     this.fillTimeSlots();
-
   }
 
   render() {
@@ -258,8 +268,8 @@ class Main extends Component {
                 );
               }}
             />
-            <Route component={ErrorPage} />
           </Switch>
+          <Header />
           <NavBar
             updateSelectedTable={this.updateSelectedTable}
             updateState={this.state.updateState}
