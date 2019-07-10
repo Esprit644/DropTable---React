@@ -13,7 +13,7 @@ class Main extends Component {
       availableTables: [],
       selectedTable: 1,
       selectedPartySize: 0,
-      selectedDate: "",
+      selectedDate: '',
       diningTables: [],
       selectedBooking: {},
       customers: [],
@@ -34,6 +34,8 @@ class Main extends Component {
     this.updateSelectedDate = this.updateSelectedDate.bind(this);
     this.updateSelectedTable = this.updateSelectedTable.bind(this);
     this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
+    this.fillTimeSlots = this.fillTimeSlots.bind(this);
+    this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
   }
 
 
@@ -41,7 +43,7 @@ class Main extends Component {
 
   makeBooking(booking) {
 
-    let bookingCustomerURL = '';
+
 
     const custDetails = {
       name: booking.name,
@@ -60,7 +62,6 @@ class Main extends Component {
       })
         .then(res => res.json())
         .then(newCustomer => this.setState((prevState) => {
-          bookingCustomerURL = newCustomer['_links'].self.href
           return { customers: prevState.customers.concat(newCustomer) }
         }, () => {
           this.postBooking(booking, newCustomer._links.self.href);
@@ -116,12 +117,14 @@ class Main extends Component {
       );
   }
 
-  fetchDetails(url, stateKey) {
+  fetchDetails(url, stateKey, callback) {
     fetch(url)
       .then(res => res.json())
       .then(customerData =>
         this.setState({
           [`${stateKey}`]: customerData._embedded[`${stateKey}`]
+        }, () => {
+          if (callback) callback()
         })
       );
   }
@@ -170,10 +173,57 @@ class Main extends Component {
     this.setState({ selectedPartySize: size });
   }
 
+  createHandleBookingClick(divValue) {
+    return () => {
+      console.log(divValue)
+      this.updateSelectedBooking(divValue)
+    }
+  }
+
+  fillTimeSlots() {
+    const bookedTables = [];
+    for (const booking of this.state.todaysBookings) {
+      const timeStart = booking.time;
+      const timeWithoutDashes = timeStart.replace(":", "");
+      const timeStartToInteger = parseInt(timeWithoutDashes);
+      const timeStartAdjusted = (timeStartToInteger - 1200) / 25 + 9;
+
+      const tableName = booking.diningTable.tableName;
+      const tableJustTheNumber = tableName.replace("Table", "");
+      const tableNumber = parseInt(tableJustTheNumber);
+      const tableNumberAdjusted = tableNumber + 2;
+      const customerName = booking.customer.name
+
+
+      const divValue = {
+        tableId: tableJustTheNumber,
+        time: timeStart
+      }
+
+      const booked = {
+        gridColumn: " span 8 /" + timeStartAdjusted,
+        gridRow: "span 1 /" + tableNumberAdjusted,
+        backgroundColor: "#4cd4a0",
+        hover: {
+          backgroundColor: "#333"
+        }
+      };
+
+      const handleBookingClick = this.createHandleBookingClick(divValue);
+
+      bookedTables.push(<button style={booked} onClick={handleBookingClick}>{customerName}</button>);
+    }
+    return bookedTables;
+  }
+
   componentDidMount() {
     this.fetchDetails(this.state.urls[0].customersURL, "customers");
     this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables");
-    this.fetchDetails(this.state.urls[1].bookingsURL, "bookings");
+    this.fetchDetails(this.state.urls[1].bookingsURL, "bookings", () => {
+      this.updateSelectedDate(new Date().getDate())
+    });
+    this.fillTimeSlots();
+    
   }
 
   render() {
@@ -201,6 +251,7 @@ class Main extends Component {
                     selectedDate={this.state.selectedDate}
                     diningTables={this.state.diningTables}
                     bookings={this.state.todaysBookings}
+                    fillTimeSlots={this.fillTimeSlots}
                     updateSelectedBooking={this.updateSelectedBooking}
                   />
                 );
@@ -227,4 +278,4 @@ class Main extends Component {
 
 export default Main;
 
-// <h2>selected table: {this.state.selectedTable}</h2>
+
