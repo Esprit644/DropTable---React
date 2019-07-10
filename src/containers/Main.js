@@ -9,12 +9,13 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      updateState: false,
       availableTables: [],
       selectedTable: 1,
       selectedPartySize: 0,
       selectedDate: '',
       diningTables: [],
-      selectedBooking: 3,
+      selectedBooking: {},
       customers: [],
       bookings: [],
       todaysBookings: [],
@@ -32,9 +33,9 @@ class Main extends Component {
     this.fetchDetails = this.fetchDetails.bind(this);
     this.updateSelectedDate = this.updateSelectedDate.bind(this);
     this.updateSelectedTable = this.updateSelectedTable.bind(this);
-    this.postDetails = this.postDetails.bind(this);
+    this.updateSelectedBooking = this.updateSelectedBooking.bind(this);
     this.fillTimeSlots = this.fillTimeSlots.bind(this);
-
+    this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
   }
 
 
@@ -141,6 +142,18 @@ class Main extends Component {
       })
   }
 
+  updateSelectedBooking(bookingInfo) {
+    this.setState({updateState: true})
+    console.log(bookingInfo.time)
+    for (const booking of this.state.todaysBookings) {
+      if (booking.diningTable.tableName === `Table${bookingInfo.tableId}` && booking.time === bookingInfo.time) {
+        this.setState({selectedBooking: booking})
+      }
+    }
+  }
+
+
+
   updateSelectedTable(newTable) {
     this.setState({ selectedTable: newTable });
   }
@@ -161,6 +174,13 @@ class Main extends Component {
     this.setState({ selectedPartySize: size });
   }
 
+  createHandleBookingClick(divValue) {
+    return () => {
+      console.log(divValue)
+      this.updateSelectedBooking(divValue)
+    }
+  }
+
   fillTimeSlots() {
     const bookedTables = [];
     for (const booking of this.state.todaysBookings) {
@@ -173,6 +193,13 @@ class Main extends Component {
       const tableJustTheNumber = tableName.replace("Table", "");
       const tableNumber = parseInt(tableJustTheNumber);
       const tableNumberAdjusted = tableNumber + 2;
+      const customerName = booking.customer.name
+
+
+      const divValue = {
+        tableId: tableJustTheNumber,
+        time: timeStart
+      }
 
       const booked = {
         gridColumn: " span 8 /" + timeStartAdjusted,
@@ -183,7 +210,9 @@ class Main extends Component {
         }
       };
 
-      bookedTables.push(<div style={booked} />);
+      const handleBookingClick = this.createHandleBookingClick(divValue);
+
+      bookedTables.push(<button style={booked} onClick={handleBookingClick}>{customerName}</button>);
     }
     return bookedTables;
   }
@@ -224,6 +253,7 @@ class Main extends Component {
                     diningTables={this.state.diningTables}
                     bookings={this.state.todaysBookings}
                     fillTimeSlots={this.fillTimeSlots}
+                    updateSelectedBooking={this.updateSelectedBooking}
                   />
                 );
               }}
@@ -231,6 +261,8 @@ class Main extends Component {
             <Route component={ErrorPage} />
           </Switch>
           <NavBar
+            updateState={this.state.updateState}
+            selectedBooking={this.state.selectedBooking}
             makeBooking={this.makeBooking}
             deleteBooking={this.deleteBooking}
             customers={this.state.customers}
@@ -247,4 +279,4 @@ class Main extends Component {
 
 export default Main;
 
-// <h2>selected table: {this.state.selectedTable}</h2>
+

@@ -17,6 +17,7 @@ const BookingForm = (props) => {
     const [displayTableValue, setDisplayTableValue] = useState(0)
 
     useEffect(() => {
+      if(!props.updateState){
         if(!customerName) {
             setfilteredCustomers([])
             return
@@ -24,6 +25,7 @@ const BookingForm = (props) => {
         fetch(`http://localhost:8080/customers/partialname/${customerName}`)
         .then(res => res.json())
         .then(data => setfilteredCustomers(data))
+      }
     },[customerName])
 
     useEffect(() => {
@@ -50,6 +52,18 @@ const BookingForm = (props) => {
         setTime('');
         event.target.reset();
     }
+
+    function populateFormOnBookingSelect() {
+      if (props.updateState) {
+        setCustomerName(props.selectedBooking.customer.name);
+        setPhone(props.selectedBooking.customer.phoneNumber);
+        setSize(props.selectedBooking.partySize);
+        setTable(props.selectedBooking.diningTable.tableName[-1]);
+        setDate(props.selectedBooking.date);
+        setTime(props.selectedBooking.time);
+      }
+    }
+
 
     function convertSlashToHyphen(date) {
       return date.replace('/', '-')
@@ -117,6 +131,18 @@ const BookingForm = (props) => {
       setTable(props.selectedTable)
     }, [props.selectedTable])
 
+    useEffect(() => {
+      if (props.updateState) {
+        const tableNum = props.selectedBooking.diningTable.tableName.replace("Table", "")
+        console.log(tableNum)
+        setFoundName(props.selectedBooking.customer.name);
+        setPhone(props.selectedBooking.customer.phoneNumber);
+        setSize(props.selectedBooking.partySize);
+        setDisplayTableValue(tableNum);
+        setDate(props.selectedBooking.date);
+        setTime(props.selectedBooking.time);
+      }
+    }, [props.selectedBooking])
 
 
     return (
@@ -134,7 +160,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="size">Party Size: </label>
-                    <input type="number" min="1" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} ></input>
+                    <input type="number" min="1" required className="party_size" name="size" placeholder="Party Size" onChange={handleSizeChange} value={size}></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="table-number">Table Number: </label>
@@ -142,11 +168,11 @@ const BookingForm = (props) => {
                 </div>
                 <div className="form-item">
                     <label htmlFor="date">Date: </label>
-                    <input type="date" required className="date" name="date" onChange={handleDateChange} ></input>
+                    <input type="date" required className="date" name="date" value={date} onChange={handleDateChange} ></input>
                 </div>
                 <div className="form-item">
                     <label htmlFor="time">Time: </label>
-                    <input type="time" required className="time" name="time" onChange={handleTimeChange} ></input>
+                    <input type="time" required className="time" name="time" value={time} onChange={handleTimeChange} ></input>
                 </div>
                     <input type="submit" value="Create Booking" className="form-submit-button"></input>
                     <button value="Delete Booking" onClick={handleDeleteClick} className="form-delete-button">Delete Button</button>

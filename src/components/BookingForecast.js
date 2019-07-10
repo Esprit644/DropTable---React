@@ -45,7 +45,12 @@ const BookingForecast = props => {
     }
   ];
 
-
+//   function createHandleBookingClick(divValue) {
+//     return () => {
+//       console.log(divValue)
+//       props.updateSelectedBooking(divValue)
+//     }
+//   }
 
 //   function fillTimeSlots(props) {
 //     const bookedTables = [];
@@ -59,6 +64,12 @@ const BookingForecast = props => {
 //       const tableJustTheNumber = tableName.replace("Table", "");
 //       const tableNumber = parseInt(tableJustTheNumber);
 //       const tableNumberAdjusted = tableNumber + 2;
+//       const customerName = booking.customer.name
+
+//       const divValue = {
+//         tableId: tableJustTheNumber,
+//         time: timeStart
+//       }
 
 //       const booked = {
 //         gridColumn: " span 8 /" + timeStartAdjusted,
@@ -69,7 +80,9 @@ const BookingForecast = props => {
 //         }
 //       };
 
-//       bookedTables.push(<div style={booked} />);
+//       const handleBookingClick = createHandleBookingClick(divValue);
+
+//       bookedTables.push(<button style={booked} onClick={handleBookingClick}>{customerName}</button>);
 //     }
 //     return bookedTables;
 //   }
