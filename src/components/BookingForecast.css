@@ -44,4 +44,7 @@
     width: 70vw;
     float: left;
     display: flex;
+    position: absolute;
+    bottom: 0;
+    
 }

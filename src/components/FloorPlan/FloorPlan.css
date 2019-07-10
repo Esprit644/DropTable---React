@@ -8,6 +8,10 @@
   font-size: 1rem;
 }
 
+.table:hover {
+  background-color: rgb(211, 242, 255);
+}
+
 .table:focus {
 background-color: #83D0F2;
 color: white;
@@ -28,6 +32,8 @@ background-color: red;
   height: 90vh;
   width: 70vw;
   float: left;
+  position: absolute;
+  bottom: 0;
 }
 
 .floorplan{

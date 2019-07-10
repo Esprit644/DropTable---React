@@ -2,6 +2,10 @@
   border: 1px solid #D44C66;
 }
 
+.day:hover {
+  background-color: #83D0F2;
+}
+
 .day:focus{
   font-weight: bold;
   background-color: #83D0F2;
