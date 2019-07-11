@@ -15,6 +15,7 @@ const BookingForm = (props) => {
     const [visible, setVisible] = useState('');
     const [href, setHref] = useState('');
     const [displayTableValue, setDisplayTableValue] = useState(0)
+    const [customerHref, setCustomerHref] = useState('');
 
     useEffect(() => {
       if(!props.updateState){
@@ -51,6 +52,7 @@ const BookingForm = (props) => {
         setDate('');
         setTime('');
         event.target.reset();
+        props.fetch();
       } else {
         props.updateBooking(makeBookingObject());
         setCustomerName('');
@@ -60,20 +62,9 @@ const BookingForm = (props) => {
         setDate('');
         setTime('');
         event.target.reset();
+        props.fetch();
       }
     }
-
-    function populateFormOnBookingSelect() {
-      if (props.updateState) {
-        setCustomerName(props.selectedBooking.customer.name);
-        setPhone(props.selectedBooking.customer.phoneNumber);
-        setSize(props.selectedBooking.partySize);
-        setTable(props.selectedBooking.diningTable.tableName[-1]);
-        setDate(props.selectedBooking.date);
-        setTime(props.selectedBooking.time);
-      }
-    }
-
 
     function convertSlashToHyphen(date) {
       return date.replace('/', '-')
@@ -88,6 +79,7 @@ const BookingForm = (props) => {
             date: newDate,
             time: time,
             href: href,
+            customerHref: customerHref
         }
         return bookingDetails;
     }
@@ -129,7 +121,7 @@ const BookingForm = (props) => {
         setTime(event.target.value)
     }
 
-    function handleDeleteClick() {
+    function handleDeleteClick(event) {
       props.deleteBooking()
     }
 
@@ -152,6 +144,7 @@ const BookingForm = (props) => {
         setDisplayTableValue(tableNum);
         setDate(props.selectedBooking.date);
         setTime(props.selectedBooking.time);
+        setCustomerHref(props.selectedBooking.customerHref);
       }
     }, [props.selectedBooking])
 
@@ -163,7 +156,7 @@ const BookingForm = (props) => {
                 <div className="form-item">
                     <label htmlFor="customer">Customer Name: </label>
                     <input type="text" required className="customer_name" name="customer" placeholder="Name" onChange={handleNameChange} value={foundName} ></input>
-                    <button className="delete-button">Delete</button>
+                    {/* <button className="delete-button">Delete</button> */}
                     <div className={`name-search-narrower + ${visible}` } >{searchOptions}</div>
                 </div>
                 <div className="form-item">

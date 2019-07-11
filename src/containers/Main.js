@@ -38,6 +38,7 @@ class Main extends Component {
     this.fillTimeSlots = this.fillTimeSlots.bind(this);
     this.createHandleBookingClick = this.createHandleBookingClick.bind(this);
     this.updateBooking = this.updateBooking.bind(this);
+    this.fetch = this.fetch.bind(this);
   }
 
   makeBooking(booking) {
@@ -74,7 +75,7 @@ class Main extends Component {
   postBooking(booking, customer) {
     const tableURL = `http://localhost:8080/diningTables/${
       this.state.selectedTable
-    }`;
+      }`;
     const bookDetails = {
       date: booking.date,
       time: booking.time,
@@ -125,6 +126,8 @@ class Main extends Component {
   }
 
   updateBooking(body) {
+    debugger
+    console.log(body);
     fetch(this.state.selectedBooking.customerHref, {
       method: "PUT",
       headers: {
@@ -172,7 +175,6 @@ class Main extends Component {
 
   updateSelectedBooking(bookingInfo) {
     this.setState({ updateState: true });
-    console.log(bookingInfo.time);
     for (const booking of this.state.todaysBookings) {
       if (
         booking.diningTable.tableName === `Table${bookingInfo.tableId}` &&
@@ -205,7 +207,6 @@ class Main extends Component {
 
   createHandleBookingClick(divValue) {
     return () => {
-      console.log(divValue);
       this.updateSelectedBooking(divValue);
     };
   }
@@ -258,6 +259,15 @@ class Main extends Component {
     this.fillTimeSlots();
   }
 
+  fetch() {
+    this.fetchDetails(this.state.urls[0].customersURL, "customers");
+    this.fetchDetails(this.state.urls[2].diningTablesURL, "diningTables");
+    this.fetchDetails(this.state.urls[1].bookingsURL, "bookings", () => {
+      this.updateSelectedDate(new Date().getDate());
+    });
+    this.fillTimeSlots();
+  }
+
   render() {
     return (
       <Router>
@@ -292,7 +302,8 @@ class Main extends Component {
           </Switch>
           <Header />
           <NavBar
-          updateBooking={this.updateBooking}
+            fetch={this.fetch}
+            updateBooking={this.updateBooking}
             updateSelectedTable={this.updateSelectedTable}
             updateState={this.state.updateState}
             selectedBooking={this.state.selectedBooking}

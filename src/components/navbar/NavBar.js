@@ -9,41 +9,30 @@ import SwitchToggle from "./SwitchToggle.js";
 import { BrowserRouter as Link } from "react-router-dom";
 
 const NavBar = props => {
-  //   let buttonValue = false;
-
-  //   function handleCheck(event) {
-  //     console.log("xxxxxxxxxxx");
-  //     console.log("event", buttonValue);
-
-  //     if (buttonValue === false) {
-  //       console.log("value is false inside If statement ");
-  //       buttonValue = true;
-  //     } else {
-  //       console.log("value is True inside else statement");
-  //       buttonValue = false;
-  //     }
-  return (
-          <nav id="nav-container">
+      
+    return (
+        <nav id="nav-container">
             <div className="calendar-container">
-			  <SwitchToggle/>
-              <Calendar updateSelectedDate={props.updateSelectedDate}/>
+
+                <Calendar updateSelectedDate={props.updateSelectedDate} />
             </div>
             <div className="booking-form-container">
                 <BookingForm
-                updateBooking={props.updateBooking}
-                  updateSelectedTable={props.updateSelectedTable}
-                  updateState={props.updateState}
-                  selectedBooking={props.selectedBooking}
-                  makeBooking={props.makeBooking}
-                  deleteBooking={props.deleteBooking}
-                  customers={props.customers}
-                  updatePartySize={props.updatePartySize}
-                  numOfTables={props.tables.length}
-                  selectedTable={props.selectedTable}/>
+                    fetch={props.fetch}
+                    updateBooking={props.updateBooking}
+                    updateSelectedTable={props.updateSelectedTable}
+                    updateState={props.updateState}
+                    selectedBooking={props.selectedBooking}
+                    makeBooking={props.makeBooking}
+                    deleteBooking={props.deleteBooking}
+                    customers={props.customers}
+                    updatePartySize={props.updatePartySize}
+                    numOfTables={props.tables.length}
+                    selectedTable={props.selectedTable} />
             </div>
         </nav>
 
-  );
+    );
 };
 
 export default NavBar;
